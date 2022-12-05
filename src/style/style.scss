@@ -1,35 +1,15 @@
-@use "utils/a11y"; // Om det inte funkar, byt @use mot @import
-@use "vendor/reset";
+@use 'utils/a11y'; // Om det inte funkar, byt @use mot @import
+@use 'vendor/reset';
 
-@import 'base';   
+@import 'base';
 
-@media screen and (min-width: 768px){
-    @import 'tablet';
+@media screen and (min-width: 768px) {
+  @import 'tablet';
 }
 
-@media screen and (min-width: 1400px){
-    @import 'desktop'; 
+@media screen and (min-width: 1400px) {
+  @import 'desktop';
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 :root {

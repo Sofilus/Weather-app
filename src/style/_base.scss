@@ -1,0 +1,48 @@
+/*------------------------------------------
+-----------------Header---------------------
+-------------------------------------------*/
+
+.headerContainer {
+  height: 400px;
+  background-color: lightblue;
+}
+
+h1 {
+  margin-bottom: 120px;
+  text-align: center;
+  padding-top: 120px;
+  font-size: 4rem;
+  font-family: 'Dosis';
+}
+
+form {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+form input{
+    border: none;
+    border-radius: 5px;
+}
+
+form button{
+    height: 40px;
+    width: 40px;
+    border: none;
+    background-color: grey;
+}
+
+
+/*------------------------------------------
+-----------------Main---------------------
+-------------------------------------------*/
+
+.tempratureContainer{
+    height: 750px;
+    border: black solid 2px;
+}
+
+h2{
+    
+}
