@@ -1,8 +1,8 @@
 // eslint-disable-next-line max-len
-const url = 'https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/72420/period/latest-hour/data.json';
+const urlTempLastHourGbg = 'https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/72420/period/latest-hour/data.json';
 
 async function getDataLastHour() {
-  return fetch(url)
+  return fetch(urlTempLastHourGbg)
     .then((data) => {
       console.log(data);
       return data.json();

@@ -1,6 +1,8 @@
 import './style/style.scss';
 
-import getDataLastHour from './apiSmhi';
+import getDataLastHour from './api-smhi-temp-last-hour';
+
+import getDataWind from './api-smhi-wind';
 
 /**
  * Data från API som skrivs ut och hämtas
@@ -23,6 +25,13 @@ async function dataLastHourGbg(): Promise<void> {
 
 await dataLastHourGbg();
 
+async function dataWind(): Promise<void> {
+  const data: object = await getDataWind() as object;
+  console.log(data);
+}
+
+await dataWind();
+
 /**
  * Bakgrundsbild ändras beroende på årstid
  */
@@ -41,10 +50,6 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
 
 /**
  * TODO
- x Hämta api från SMHI med info om tempratur senaste timmen
- x Få tempraturen att visas på skärmen
- x Få orten att vara samma som den från vår API
- * Ändra utseende på stylingen beroende på årstid
- *[] beroende på månad ändra bakgrundsbild
- *
+ * [] Visa nederbörd
+ * [] Visa vind
  */
