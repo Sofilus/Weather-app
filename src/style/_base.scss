@@ -1,14 +1,14 @@
-/*------------------------------------------
+/* ------------------------------------------
 -----------------Header---------------------
--------------------------------------------*/
+------------------------------------------- */
 header{
-    background-color: rgb(255, 255, 255);
+    background-color:  rgb(255, 255, 255);
     color: rgb(0, 0, 0);
     height: 170px;
     
 }
 
-.backgroundImg {
+.background-img {
   background-image: url('/public/summer.jpg');
   background-size: cover;
   background-repeat: no-repeat;
@@ -44,11 +44,11 @@ form button {
 -----------------Main---------------------
 -------------------------------------------*/
 
-.tempratureContainer {
+.temperature-container {
   min-height: 800px;
 }
 
-.pickedLocation {
+.picked-location {
   padding: 5px;
   width: 80vw;
   max-width: 550px;
@@ -64,7 +64,7 @@ form button {
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.tempratureOverTime { 
+.temperature-over-time { 
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   width: 80vw;
@@ -78,7 +78,7 @@ form button {
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.tempratureNowContainer{
+.temperature-now-container{
     display: flex;
     justify-content: center;
     width: 80vw;
@@ -93,19 +93,19 @@ form button {
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.temprature{
+.temperature{
     font-size: 10rem;
     line-height: 300px;
 }
 
-.tempratureIcon{
+.temperature-icon{
     font-size: 6rem;
     margin-top: 50px;
 }
 
-/*------------------------------------------
+/* ------------------------------------------
 -----------------Footer---------------------
--------------------------------------------*/
+------------------------------------------- */
 
 footer{
     background-color: rgb(255, 255, 255);
