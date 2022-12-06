@@ -17,7 +17,7 @@ async function dataLastHourGbg(): Promise<void> {
   console.log(data);
 }
 
-dataLastHourGbg();
+await dataLastHourGbg();
 
 /**
  * TODO
