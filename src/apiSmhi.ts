@@ -18,6 +18,4 @@ async function getDataLastHour() {
     });
 }
 
-const tempratureLastHourGbg = await getDataLastHour();
-
-export default tempratureLastHourGbg;
+export default getDataLastHour;
