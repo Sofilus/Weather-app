@@ -38,6 +38,17 @@ async function dataWind(): Promise<void> {
 await dataWind();
 
 /**
+ * Få reda på användarens position
+ */
+const successCallback = (position: object) => {
+  console.log(position);
+};
+const errorCallback = (error) => {
+  console.log(error);
+};
+navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+
+/**
  * Bakgrundsbild ändras beroende på årstid
  */
 const backgroundImg: HTMLElement = document.querySelector('main') as HTMLElement;
