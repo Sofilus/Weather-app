@@ -7,11 +7,7 @@ async function getDataLastHour() {
       console.log(data);
       return data.json();
     })
-    .then((json) => {
-      console.log('Aktuell temperatur:', json.value[0].value, 'grader');
-      console.log('Resterande data:');
-      return json;
-    })
+    .then((json: object) => json)
     .catch((err) => {
       console.error(err);
       return null;

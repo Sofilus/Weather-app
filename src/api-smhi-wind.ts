@@ -7,11 +7,7 @@ async function getDataWind() {
       console.log(data);
       return data.json();
     })
-    .then((json) => {
-      console.log('Aktuell vindhastighet:', json.value[0].value);
-      console.log('Resterande data:');
-      return json;
-    })
+    .then((json: object) => json)
     .catch((err) => {
       console.error(err);
       return null;

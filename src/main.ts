@@ -4,6 +4,9 @@ import getDataLastHour from './api-smhi-temp-last-hour';
 
 import getDataWind from './api-smhi-wind';
 
+import getDataAllStationsLastHour from './api-smhi-lasthour-allstations';
+
+
 /**
  * Få reda på användarens position
  */
@@ -41,6 +44,17 @@ function closeDropdown(): void {
  * Data från API som skrivs ut och används på sidan
  */
 
+// Hämtar alla stationer från API
+async function dataAllStationsLastHour(): Promise<void> {
+// väntar på all data hämtas från APIn innan den skriver ut datan på sidan
+  const data: object = await getDataAllStationsLastHour() as object;
+
+  console.log(data);
+}
+
+await dataAllStationsLastHour();
+
+/*
 // Hämtad data med tempratur från senaste timmen som skrivs ut på sidan
 async function dataLastHourGbg(): Promise<void> {
   // väntar på all data hämtas från APIn innan den skriver ut datan på sidan
@@ -90,7 +104,7 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
 /**
  * TODO
  * [x] När jag klickar på inputrutan ska ett fält komma upp med en ul och li med min plats
- * [] När fältet inte är markerat ska klassen förvinna
+ * [x] När fältet inte är markerat ska klassen förvinna
  * [] När jag klickar på min position ska webblöäsaren fråga efter användarens plats
  * [] Koordinaterna ska skrivas ut som en plats
  * [] Min position ska skrivas ut i rubriken ort
