@@ -108,9 +108,10 @@ form button {
     max-width: 400px;
     height: 300px;
     margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 40px;
     background-color: rgb(250, 250, 250);
     text-align: center;
-    margin-top: 50px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
@@ -125,6 +126,45 @@ form button {
     font-size: 6rem;
     margin-top: 50px;
 }
+
+.other-information{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 350px;
+  min-height: 200px;
+  margin: 0 auto;
+  background-color: rgb(250, 250, 250);
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+  rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  margin-top: 10px;
+}
+
+.wind-speed-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  max-width: 300px;
+  height: 80px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+}
+
+.wind-icon{
+  margin-right: 20px;
+  font-size: 1.5rem;
+}
+
+.wind-speed{
+  margin-left: 10px;
+  font-size: 1.5rem;
+}
+
 
 /* ------------------------------------------
 -----------------Footer---------------------

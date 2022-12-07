@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="https://kit.fontawesome.com/364f1f7cab.js" crossorigin="anonymous" defer></script>
     <title>Projekt</title>
   </head>
   <body>
@@ -20,11 +21,19 @@
         </form>
         <article class="temperature-container">
           <section>
-            <h2 class="picked-location" id="locality">Skepplanda</h2>
+            <h2 class="picked-location" id="locality"></h2>
             <h3 class="temperature-over-time"> Tempratur senaste timmen</h3>
             <div class="temperature-now-container">
               <p class="temperature" id="temperatureNow"></p>
               <p class="temperature-icon">°</p>
+            </div>
+          </section>
+          <section class="other-information">
+            <div class="wind-speed-container">
+              <i class="fa-solid fa-wind wind-icon"></i>
+              <h3 class="wind-speed-header">Vindhastighet</h3>
+              <p id="windSpeed" class="wind-speed"></p>
+              <p class="wind-speed">m/s</p>
             </div>
           </section>
         <article>
