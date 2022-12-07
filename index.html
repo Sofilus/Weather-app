@@ -15,12 +15,17 @@
         </section>
       </header>
       <main class="background-img" id="backgroundImg">
-        <form action="">
-          <input type="text" placeholder="Sök ort" name="search">
-          <button type="submit"></button>
-        </form>
-        <article class="temperature-container">
-          <section>
+          <form action="">
+            <input type="text" placeholder="Sök ort" name="search" id="searchField" autocomplete="off">
+            <button type="submit" id="searchBtn"></button>
+          </form>
+          <div class="search-dropdown display-none" id="searchDropdown" >
+            <ul>
+              <li>Min position</li>
+            </ul>
+          </div>
+        <article class="weather-container">
+          <section class="temperature-container">
             <h2 class="picked-location" id="locality"></h2>
             <h3 class="temperature-over-time"> Tempratur senaste timmen</h3>
             <div class="temperature-now-container">
