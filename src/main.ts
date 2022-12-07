@@ -41,19 +41,39 @@ function closeDropdown(): void {
 }
 
 /**
- * Data från API som skrivs ut och används på sidan
+ * Hämtar alla stationer från API smhi
  */
+
+let stations: Array<object> = []; // Arrayen med alla stationer
 
 // Hämtar alla stationer från API
 async function dataAllStationsLastHour(): Promise<void> {
 // väntar på all data hämtas från APIn innan den skriver ut datan på sidan
   const data: object = await getDataAllStationsLastHour() as object;
+  stations = data.station;
 
   console.log(data);
 }
 
 await dataAllStationsLastHour();
 
+/**
+ * Filtrera arrayen med stationerna beroende på vad användaren skriver in i sökfältet
+ */
+
+// Kopierad array som kommer filtreras efter ort vi söker på
+let filterStations = [...stations];
+
+searchField?.addEventListener('input', stationSuggetions);
+
+// Jämför ordet som skrivs i inputrutan om det finns med i namet på några av stationerna
+function stationSuggetions(){
+  const exp = new RegExp('^[a-zA-Z]+$');
+  if (stations){
+    filterStations = stations.filter((station) => station.name.toLowerCase().includes (searchField.value.toLowerCase())); // Skapar en ny array varje gång jag skriver en bokstav
+    console.log(filterStations);
+  }
+}
 /*
 // Hämtad data med tempratur från senaste timmen som skrivs ut på sidan
 async function dataLastHourGbg(): Promise<void> {
