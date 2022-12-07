@@ -8,7 +8,7 @@ import getDataWind from './api-smhi-wind';
  * Data från API som skrivs ut och hämtas
  */
 
-// Hämtad data senaste från timmen som skrivs ut på sidan
+// Hämtad data med tempratur från senaste timmen som skrivs ut på sidan
 async function dataLastHourGbg(): Promise<void> {
   // väntar på all data hämtas från APIn innan den skriver ut datan på sidan
   const data: object = await getDataLastHour() as object;
@@ -17,7 +17,7 @@ async function dataLastHourGbg(): Promise<void> {
   const locality: HTMLElement = document.querySelector('#locality') as HTMLElement;
   locality.innerHTML = `<span>${data.station.name}</span>`;
 
-  // Skriver ut temperaturen just nu i Göteborg Landvetter
+  // Skriver ut temperaturen senaste timmen i Göteborg Landvetter
   const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement;
   temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
   console.log(data);
@@ -26,7 +26,12 @@ async function dataLastHourGbg(): Promise<void> {
 await dataLastHourGbg();
 
 async function dataWind(): Promise<void> {
+  // väntar på all data hämtas från APIn innan den skriver ut datan på sidan
   const data: object = await getDataWind() as object;
+
+  // Skriver ut windhastighet Göteborg Landvetter
+  const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement;
+  windSpeedNow.innerHTML = `<span>${data.value[0].value}</span>`;
   console.log(data);
 }
 
@@ -51,5 +56,5 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
 /**
  * TODO
  * [] Visa nederbörd
- * [] Visa vind
+ * 
  */
