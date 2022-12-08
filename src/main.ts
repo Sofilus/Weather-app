@@ -1,8 +1,8 @@
 import './style/style.scss';
 
-import getDataLastHour from './api-smhi-temp-last-hour';
+// import getDataLastHour from './api-smhi-temp-last-hour';
 
-import getDataWind from './api-smhi-wind';
+// import getDataWind from './api-smhi-wind';
 
 import getDataAllStationsLastHour from './api-smhi-lasthour-allstations';
 
@@ -101,6 +101,7 @@ function stationSuggetions() {
   }
 }
 
+// Identifierar station och skriver ut information om den på sidan
 async function chosenStation(e) {
   let clickedStationIndex = e.target.id; // Klickad station får ett index i listan av förslagna stationer
   let clickedStation = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
@@ -111,7 +112,10 @@ async function chosenStation(e) {
   // Skriver ut tempratur från vald station på skärmen
   const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement;
   temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
-  
+
+  // Skriver ut orten
+  const locality: HTMLElement = document.querySelector('#locality') as HTMLElement;
+  locality.innerHTML = `<span>${data.station.name}</span>`;
 }
 /**
  * TODO
@@ -130,12 +134,14 @@ async function dataLastHourGbg(): Promise<void> {
   // väntar på all data hämtas från APIn innan den skriver ut datan på sidan
   const data: object = await getDataLastHour() as object;
 
+  // Skriver ut tempratur från vald station på skärmen
+  const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement;
+  temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
+
   // Skriver ut orten
   const locality: HTMLElement = document.querySelector('#locality') as HTMLElement;
   locality.innerHTML = `<span>${data.station.name}</span>`;
 
-  // Skriver ut temperaturen senaste timmen i Göteborg Landvetter
-  
 }
 
 await dataLastHourGbg();
