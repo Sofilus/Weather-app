@@ -106,13 +106,18 @@ async function chosenStation(e) {
   let clickedStation = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
 
   const data = await getChosenStationData(clickedStation, 'latest-hour');
-  console.log(data)
+  console.log(data);
+
+  // Skriver ut tempratur från vald station på skärmen
+  const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement;
+  temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
+  
 }
 /**
  * TODO
  * [] Det ska gå att klicka på stationerna som kommer upp som förslag
  * [x] Lista ut vilken jag klickar på
- * [] Tempratur senaste timmen ska hämtas från rätt ställe
+ * [x] Tempratur senaste timmen ska hämtas från rätt ställe
  * [] Temp ska visas på skärmen
  * [] Ort ska visas i ort rubriken
  * []  Vindhastighet ska visas
@@ -130,9 +135,7 @@ async function dataLastHourGbg(): Promise<void> {
   locality.innerHTML = `<span>${data.station.name}</span>`;
 
   // Skriver ut temperaturen senaste timmen i Göteborg Landvetter
-  const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement;
-  temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
-  console.log(data);
+  
 }
 
 await dataLastHourGbg();
