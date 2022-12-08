@@ -64,16 +64,39 @@ await dataAllStationsLastHour();
 // Kopierad array som kommer filtreras efter ort vi söker på
 let filterStations = [...stations];
 
+const ulSuggestedStation: HTMLElement = document.querySelector('#suggestedStations') as HTMLElement;
+
 searchField?.addEventListener('input', stationSuggetions);
 
 // Jämför ordet som skrivs i inputrutan om det finns med i namet på några av stationerna
-function stationSuggetions(){
-  const exp = new RegExp('^[a-zA-Z]+$');
-  if (stations){
-    filterStations = stations.filter((station) => station.name.toLowerCase().includes (searchField.value.toLowerCase())); // Skapar en ny array varje gång jag skriver en bokstav
-    console.log(filterStations);
+function stationSuggetions() {
+  if (stations) {
+    ulSuggestedStation.innerHTML = '';
+    // Skapar en ny array varje gång jag skriver en bokstav och jämför namnet och de i sökrutan
+    filterStations = stations.filter((station) => station.name.toLowerCase().includes(searchField.value.toLowerCase())); 
+  }
+  // Skriver ut 5 eller färre stationsnamn i form av li element som matchar med de som skrivs i sökrutan
+  for (let i = 0; i < 5; i++) {
+    if (filterStations[i]) {
+      const liItem = document.createElement('li');
+      const suggestedStation = document.createTextNode(filterStations[i].name);
+      liItem.appendChild(suggestedStation);
+      ulSuggestedStation.appendChild(liItem);
+    }
   }
 }
+
+/**
+ * TODO
+ * [x]listan måste uppdateras varje gång jag skriver en nytt ord
+ * [x]Bara 5 ska visas ändra till for loop och längden är 5
+ * [] Comitta
+ * [] CSS
+ * [] Display none ska finnas först och när vi börjar skriva ska listan komma upp
+ * []Comitta
+ * []Det ska gå att klicka på dem som visas
+ */
+
 /*
 // Hämtad data med tempratur från senaste timmen som skrivs ut på sidan
 async function dataLastHourGbg(): Promise<void> {
