@@ -6,7 +6,6 @@ import getDataWind from './api-smhi-wind';
 
 import getDataAllStationsLastHour from './api-smhi-lasthour-allstations';
 
-
 /**
  * Få reda på användarens position
  */
@@ -22,22 +21,36 @@ navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
  * Dropdown på sök ort inputen
  */
 
-// Kallar på alla viktiga element i sök ort
+// Kallar på alla berörda element i sök ort delen
 const searchField: HTMLElement = document.querySelector('#searchField') as HTMLElement;
-const searchDropdown: HTMLElement = document.querySelector('#searchDropdown') as HTMLElement;
+const searchDropdownPosition: HTMLElement = document.querySelector('#searchDropdown') as HTMLElement;
+const searchDropdownStations: HTMLElement = document.querySelector('#dropdownStations') as HTMLElement;
 
 // Skapar eventlisteners
-searchField?.addEventListener('focus', openDropdown);
-searchField?.addEventListener('blur', closeDropdown);
+searchField?.addEventListener('input', openDropdowns);
+searchField?.addEventListener('blur', closeDropdowns);
+searchField?.addEventListener('focus', openDropdownPosition);
 
-// Öppnar dropdown
-function openDropdown(): void {
-  searchDropdown.classList.remove('display-none');
+// Öppnar och stänger dropdowns när vi skriver i inputrutan
+function openDropdowns(): void {
+  if (searchField.value === '') {
+    searchDropdownPosition.classList.remove('display-none');
+    searchDropdownStations.classList.add('display-none');
+  } else {
+    searchDropdownPosition.classList.add('display-none');
+    searchDropdownStations.classList.remove('display-none');
+  }
 }
 
-// Stänger dropdown
-function closeDropdown(): void {
-  searchDropdown.classList.add('display-none');
+// Öppnar dropdown min position när jag har klickat och har fokus på inputrutan
+function openDropdownPosition(): void {
+  searchDropdownPosition.classList.remove('display-none');
+}
+
+// Stänger dropdown när vi klickar utanför inputrutan
+function closeDropdowns(): void {
+  searchDropdownPosition.classList.add('display-none');
+  searchDropdownStations.classList.add('display-none');
 }
 
 /**
@@ -73,7 +86,7 @@ function stationSuggetions() {
   if (stations) {
     ulSuggestedStation.innerHTML = '';
     // Skapar en ny array varje gång jag skriver en bokstav och jämför namnet och de i sökrutan
-    filterStations = stations.filter((station) => station.name.toLowerCase().includes(searchField.value.toLowerCase())); 
+    filterStations = stations.filter((station) => station.name.toLowerCase().includes(searchField.value.toLowerCase()));
   }
   // Skriver ut 5 eller färre stationsnamn i form av li element som matchar med de som skrivs i sökrutan
   for (let i = 0; i < 5; i++) {
@@ -90,10 +103,10 @@ function stationSuggetions() {
  * TODO
  * [x]listan måste uppdateras varje gång jag skriver en nytt ord
  * [x]Bara 5 ska visas ändra till for loop och längden är 5
- * [] Comitta
- * [] CSS
- * [] Display none ska finnas först och när vi börjar skriva ska listan komma upp
- * []Comitta
+ * [x] Comitta
+ * [x] CSS
+ * [x] Display none ska finnas först och när vi börjar skriva ska listan komma upp
+ * [x]Comitta
  * []Det ska gå att klicka på dem som visas
  */
 
