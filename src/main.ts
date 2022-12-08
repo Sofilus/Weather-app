@@ -8,8 +8,6 @@ import getDataAllStationsLastHour from './api-smhi-lasthour-allstations';
 
 import getChosenStationData from './chosen-station-data';
 
-import getWindData from './api-smhi-chosen-stations-wind';
-
 /**
  * Få reda på användarens position
  */
@@ -32,7 +30,7 @@ const searchDropdownStations: HTMLElement = document.querySelector('#dropdownSta
 
 // Skapar eventlisteners
 searchField?.addEventListener('input', openDropdowns);
-searchField?.addEventListener('blur', closeDropdowns);
+searchField?.addEventListener('blur', closeDropdownPosition);
 searchField?.addEventListener('focus', openDropdownPosition);
 
 // Öppnar och stänger dropdowns när vi skriver i inputrutan
@@ -52,7 +50,7 @@ function openDropdownPosition(): void {
 }
 
 // Stänger dropdown när vi klickar utanför inputrutan
-function closeDropdowns(): void {
+function closeDropdownPosition(): void {
   searchDropdownPosition.classList.add('display-none');
 }
 
@@ -111,8 +109,8 @@ async function chosenStation(e) {
   const clickedStationIndex = e.target.id; // Klickad station får ett index i listan av förslagna stationer
   const clickedStation = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
 
-  const data = await getChosenStationData(clickedStation, 'latest-hour'); // Skickar in parametrar key och period för temp
-  const dataWind = await getWindData(clickedStation, 'latest-hour');// Skickar in parametrar key och period för vind
+  const data = await getChosenStationData(clickedStation, 'latest-hour', 1); // Skickar in parametrar key och period för temp
+  const dataWind = await getChosenStationData(clickedStation, 'latest-hour', 4);// Skickar in parametrar key och period för vind
   console.log(dataWind);
 
   // Skriver ut tempratur från vald station på skärmen
@@ -132,45 +130,17 @@ async function chosenStation(e) {
 
 /**
  * TODO
- * [] Det ska gå att klicka på stationerna som kommer upp som förslag
+ * [x] Det ska gå att klicka på stationerna som kommer upp som förslag
  * [x] Lista ut vilken jag klickar på
  * [x] Tempratur senaste timmen ska hämtas från rätt ställe
  * [x] Temp ska visas på skärmen
  * [x] Ort ska visas i ort rubriken
  * [x]  Vindhastighet ska visas
- * [] När jag kfeslickar utabnför stationsrutan och inputrutan ska den försvinna
+ * [] Lägg till nederbörd och andra parametrar
+ * [] De stationer som inte har tempratur senaste timmen ska säga finns inte data för den här platsen
+ * [] De ovan ska inte heller visa vindhastigheten
+ * [] När jag klickar utanför stationsrutan och inputrutan ska den försvinna
  */
-
-/*
-// Hämtad data med tempratur från senaste timmen som skrivs ut på sidan
-async function dataLastHourGbg(): Promise<void> {
-  // väntar på all data hämtas från APIn innan den skriver ut datan på sidan
-  const data: object = await getDataLastHour() as object;
-
-  // Skriver ut tempratur från vald station på skärmen
-  const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement;
-  temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
-
-  // Skriver ut orten
-  const locality: HTMLElement = document.querySelector('#locality') as HTMLElement;
-  locality.innerHTML = `<span>${data.station.name}</span>`;
-
-}
-
-await dataLastHourGbg();
-
-// Hämtad data med vindhastighet som skrivs ut på sidan
-async function dataWind(): Promise<void> {
-  // väntar på all data hämtas från APIn innan den skriver ut datan på sidan
-  const data: object = await getDataWind() as object;
-
-  // Skriver ut windhastighet Göteborg Landvetter
-  const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement;
-  windSpeedNow.innerHTML = `<span>${data.value[0].value}</span>`;
-  console.log(data);
-}
-
-await dataWind();
 
 /**
  * Bakgrundsbild ändras beroende på årstid
