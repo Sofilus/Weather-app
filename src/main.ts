@@ -6,6 +6,8 @@ import getDataWind from './api-smhi-wind';
 
 import getDataAllStationsLastHour from './api-smhi-lasthour-allstations';
 
+import getChosenStationData from './chosen-station-data';
+
 /**
  * Få reda på användarens position
  */
@@ -50,7 +52,6 @@ function openDropdownPosition(): void {
 // Stänger dropdown när vi klickar utanför inputrutan
 function closeDropdowns(): void {
   searchDropdownPosition.classList.add('display-none');
-  searchDropdownStations.classList.add('display-none');
 }
 
 /**
@@ -65,7 +66,6 @@ async function dataAllStationsLastHour(): Promise<void> {
   const data: object = await getDataAllStationsLastHour() as object;
   stations = data.station;
 
-  console.log(data);
 }
 
 await dataAllStationsLastHour();
@@ -92,22 +92,31 @@ function stationSuggetions() {
   for (let i = 0; i < 5; i++) {
     if (filterStations[i]) {
       const liItem = document.createElement('li');
+      liItem.id = [i]; // ger varje li ett id i form av indexet
       const suggestedStation = document.createTextNode(filterStations[i].name);
       liItem.appendChild(suggestedStation);
       ulSuggestedStation.appendChild(liItem);
+      liItem.addEventListener('click', chosenStation); // För att kunna klicka och välja en förslagen station i sökrutan
     }
   }
 }
 
+async function chosenStation(e) {
+  let clickedStationIndex = e.target.id; // Klickad station får ett index i listan av förslagna stationer
+  let clickedStation = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
+
+  const data = await getChosenStationData(clickedStation, 'latest-hour');
+  console.log(data)
+}
 /**
  * TODO
- * [x]listan måste uppdateras varje gång jag skriver en nytt ord
- * [x]Bara 5 ska visas ändra till for loop och längden är 5
- * [x] Comitta
- * [x] CSS
- * [x] Display none ska finnas först och när vi börjar skriva ska listan komma upp
- * [x]Comitta
- * []Det ska gå att klicka på dem som visas
+ * [] Det ska gå att klicka på stationerna som kommer upp som förslag
+ * [x] Lista ut vilken jag klickar på
+ * [] Tempratur senaste timmen ska hämtas från rätt ställe
+ * [] Temp ska visas på skärmen
+ * [] Ort ska visas i ort rubriken
+ * []  Vindhastighet ska visas
+ * [] När jag kfeslickar utabnför stationsrutan och inputrutan ska den försvinna
  */
 
 /*
