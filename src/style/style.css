@@ -1,1 +1,148 @@
-*,*::before,*::after{box-sizing:border-box}body,h1,h2,h3,h4,p,figure,blockquote,dl,dd{margin:0}ul[role=list],ol[role=list]{list-style:none}html:focus-within{scroll-behavior:smooth}body{min-height:100vh;text-rendering:optimizeSpeed;line-height:1.5}a:not([class]){-webkit-text-decoration-skip:ink;text-decoration-skip-ink:auto}img,picture{max-width:100%;display:block}input,button,textarea,select{font:inherit}@media(prefers-reduced-motion: reduce){html:focus-within{scroll-behavior:auto}*,*::before,*::after{-webkit-animation-duration:.01ms !important;animation-duration:.01ms !important;-webkit-animation-iteration-count:1 !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}}header{background-color:#fff;color:#000;height:170px}.backgroundImg{background-image:url("/public/summer.jpg");background-size:cover;background-repeat:no-repeat;box-shadow:rgba(0,0,0,.25) 0px 54px 55px,rgba(0,0,0,.12) 0px -12px 30px,rgba(0,0,0,.12) 0px 4px 6px,rgba(0,0,0,.17) 0px 12px 13px,rgba(0,0,0,.09) 0px -3px 5px}h1{margin-bottom:60px;text-align:center;padding-top:40px;font-size:4rem}form{display:flex;justify-content:end;margin-right:10vw}form input{border:#000 solid 2px}form button{height:40px;width:40px;border:none;background-color:#000}.tempratureContainer{min-height:800px}.pickedLocation{padding:5px;width:80vw;max-width:550px;margin:0 auto;font-size:2rem;text-align:center;margin-top:20px;background-color:#fafafa;border-bottom:#000 solid 2px;border-top-right-radius:10px;border-top-left-radius:10px;box-shadow:rgba(0,0,0,.25) 0px 54px 55px,rgba(0,0,0,.12) 0px -12px 30px,rgba(0,0,0,.12) 0px 4px 6px,rgba(0,0,0,.17) 0px 12px 13px,rgba(0,0,0,.09) 0px -3px 5px}.tempratureOverTime{border-bottom-right-radius:10px;border-bottom-left-radius:10px;width:80vw;max-width:550px;margin:0 auto;text-align:center;padding:10px;font-size:1.4rem;background-color:#fafafa;box-shadow:rgba(0,0,0,.25) 0px 54px 55px,rgba(0,0,0,.12) 0px -12px 30px,rgba(0,0,0,.12) 0px 4px 6px,rgba(0,0,0,.17) 0px 12px 13px,rgba(0,0,0,.09) 0px -3px 5px}.tempratureNowContainer{display:flex;justify-content:center;width:80vw;max-width:400px;height:300px;margin:0 auto;background-color:#fafafa;text-align:center;margin-top:50px;border-radius:10px;box-shadow:rgba(0,0,0,.25) 0px 54px 55px,rgba(0,0,0,.12) 0px -12px 30px,rgba(0,0,0,.12) 0px 4px 6px,rgba(0,0,0,.17) 0px 12px 13px,rgba(0,0,0,.09) 0px -3px 5px}.temprature{font-size:10rem;line-height:300px}.tempratureIcon{font-size:6rem;margin-top:50px}footer{background-color:#fff;height:112px}/*# sourceMappingURL=style.css.map */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+html:focus-within {
+  scroll-behavior: smooth;
+}
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+a:not([class]) {
+  -webkit-text-decoration-skip: ink;
+  text-decoration-skip-ink: auto;
+}
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    -webkit-animation-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    -webkit-animation-iteration-count: 1 !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+header {
+  background-color: #fff;
+  color: #000;
+  height: 170px;
+}
+.backgroundImg {
+  background-image: url('/public/summer.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+h1 {
+  margin-bottom: 60px;
+  text-align: center;
+  padding-top: 40px;
+  font-size: 4rem;
+}
+form {
+  display: flex;
+  justify-content: end;
+  margin-right: 10vw;
+}
+form input {
+  border: #000 solid 2px;
+}
+form button {
+  height: 40px;
+  width: 40px;
+  border: none;
+  background-color: #000;
+}
+.tempratureContainer {
+  min-height: 800px;
+}
+.pickedLocation {
+  padding: 5px;
+  width: 80vw;
+  max-width: 550px;
+  margin: 0 auto;
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 20px;
+  background-color: #fafafa;
+  border-bottom: #000 solid 2px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.tempratureOverTime {
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  width: 80vw;
+  max-width: 550px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.4rem;
+  background-color: #fafafa;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.tempratureNowContainer {
+  display: flex;
+  justify-content: center;
+  width: 80vw;
+  max-width: 400px;
+  height: 300px;
+  margin: 0 auto;
+  background-color: #fafafa;
+  text-align: center;
+  margin-top: 50px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.temprature {
+  font-size: 10rem;
+  line-height: 300px;
+}
+.tempratureIcon {
+  font-size: 6rem;
+  margin-top: 50px;
+}
+footer {
+  background-color: #fff;
+  height: 112px;
+} /*# sourceMappingURL=style.css.map */

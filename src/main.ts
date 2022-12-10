@@ -68,8 +68,8 @@ let stations: Array<object> = []; // Arrayen med alla stationer
 
 // Hämtar alla stationer från API
 async function dataAllStationsLastHour(): Promise<void> {
-// väntar på all data hämtas från APIn innan den skriver ut datan på sidan
-  const data: object = await getDataAllStationsLastHour() as object;
+  // väntar på all data hämtas från APIn innan den skriver ut datan på sidan
+  const data: object = (await getDataAllStationsLastHour()) as object;
   stations = data.station;
 }
 
@@ -113,7 +113,7 @@ async function chosenStation(e) {
   const clickedStation = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
 
   const data = await getChosenStationData(clickedStation, 'latest-hour', 1); // Skickar in parametrar key och period för temp
-  const dataWind = await getChosenStationData(clickedStation, 'latest-hour', 4);// Skickar in parametrar key och period för vind
+  const dataWind = await getChosenStationData(clickedStation, 'latest-hour', 4); // Skickar in parametrar key och period för vind
   console.log(dataWind);
 
   // Skriver ut tempratur från vald station på webbsidan
@@ -156,7 +156,8 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
  * [x]  Vindhastighet ska visas
  * [] Lägg till nederbörd och andra parametrar
  * [] De stationer som inte har tempratur senaste timmen ska säga finns inte data för den här platsen
- * [] De ovan ska inte heller visa vindhastigheten
+ * [] De ovan ska inte heller visa vindhastigheten eller andra parametrar
+ * [] Ha en station som utgångsstation, som visas från början
  * [] När jag klickar utanför stationsrutan och inputrutan ska den försvinna
  */
 

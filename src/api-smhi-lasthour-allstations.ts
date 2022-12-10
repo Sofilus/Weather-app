@@ -3,9 +3,7 @@ const urlTempLastHourAllStations = 'https://opendata-download-metobs.smhi.se/api
 
 async function getDataAllStationsLastHour() {
   return fetch(urlTempLastHourAllStations)
-    .then((data) => {
-      return data.json();
-    })
+    .then((data) => data.json())
     .then((json: object) => json)
     .catch((err) => {
       console.error(err);
