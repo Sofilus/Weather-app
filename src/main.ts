@@ -1,16 +1,27 @@
+/** ******************************************************************************
+ -----------------------------------Importer-------------------------------------
+ ******************************************************************************* */
+
 import './style/style.scss';
-
 // import getDataLastHour from './api-smhi-temp-last-hour';
-
 // import getDataWind from './api-smhi-wind';
-
 import getDataAllStationsLastHour from './api-smhi-lasthour-allstations';
-
 import getChosenStationData from './chosen-station-data';
 
-/**
- * Få reda på användarens position
- */
+/** ******************************************************************************
+ ------------------------Hämtade element från html-------------------------------
+ ******************************************************************************* */
+
+const searchField: HTMLElement = document.querySelector('#searchField') as HTMLElement; // Sökrutan
+const searchDropdownPosition: HTMLElement = document.querySelector('#searchDropdown') as HTMLElement; // Min position dropdown
+const searchDropdownStations: HTMLElement = document.querySelector('#dropdownStations') as HTMLElement; // div dropdown med förslagna stationer när användaren söker efter ort sökrutan
+const ulSuggestedStation: HTMLElement = document.querySelector('#suggestedStations') as HTMLElement; // Ul med föslagna stationer som visas när användaren skriver i sökrutan
+const backgroundImg: HTMLElement = document.querySelector('main') as HTMLElement; // main
+
+/** ******************************************************************************
+ --------------------- Begär åtkomst av användarens position----------------------
+ ******************************************************************************* */
+
 const successCallback = (position: object) => {
   console.log(position);
 };
@@ -19,16 +30,11 @@ const errorCallback = (error) => {
 };
 navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 
-/**
- * Dropdown på sök ort inputen
- */
+/** ******************************************************************************
+ ----------------------------------Sökrutan, sök ort-----------------------------
+ ******************************************************************************* */
 
-// Kallar på alla berörda element i sök ort delen
-const searchField: HTMLElement = document.querySelector('#searchField') as HTMLElement;
-const searchDropdownPosition: HTMLElement = document.querySelector('#searchDropdown') as HTMLElement;
-const searchDropdownStations: HTMLElement = document.querySelector('#dropdownStations') as HTMLElement;
-
-// Skapar eventlisteners
+// Skapar eventlisteners till när användaren interagerar med sökrutan
 searchField?.addEventListener('input', openDropdowns);
 searchField?.addEventListener('blur', closeDropdownPosition);
 searchField?.addEventListener('focus', openDropdownPosition);
@@ -54,9 +60,9 @@ function closeDropdownPosition(): void {
   searchDropdownPosition.classList.add('display-none');
 }
 
-/**
- * Hämtar alla stationer från API smhi
- */
+/** ******************************************************************************
+ ------------------------Hämtar alla stationer från smhis API---------------------
+ ******************************************************************************* */
 
 let stations: Array<object> = []; // Arrayen med alla stationer
 
@@ -69,14 +75,12 @@ async function dataAllStationsLastHour(): Promise<void> {
 
 await dataAllStationsLastHour();
 
-/**
- * Filtrera arrayen med stationerna beroende på vad användaren skriver in i sökfältet
- */
+/** ******************************************************************************
+ ---------- Filtrera stationerna när användaren skriver i sökfältet---------------
+ ******************************************************************************* */
 
 // Kopierad array som kommer filtreras efter ort vi söker på
 let filterStations = [...stations];
-
-const ulSuggestedStation: HTMLElement = document.querySelector('#suggestedStations') as HTMLElement;
 
 searchField?.addEventListener('input', stationSuggetions);
 
@@ -100,11 +104,10 @@ function stationSuggetions(): void {
   }
 }
 
-/**
- * Identifierar station samt skriver ut temp och vind
-*/
+/** ******************************************************************************
+ -------Identifierar station samt skriver ut temp och vind på webbsidan-----------
+ ******************************************************************************* */
 
-// Identidierar vald station och skriver ut temp och vind på sidan
 async function chosenStation(e) {
   const clickedStationIndex = e.target.id; // Klickad station får ett index i listan av förslagna stationer
   const clickedStation = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
@@ -113,39 +116,24 @@ async function chosenStation(e) {
   const dataWind = await getChosenStationData(clickedStation, 'latest-hour', 4);// Skickar in parametrar key och period för vind
   console.log(dataWind);
 
-  // Skriver ut tempratur från vald station på skärmen
-  const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement;
+  // Skriver ut tempratur från vald station på webbsidan
+  const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement; // Där tempraturen visas
   temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
 
   // Skriver ut orten
-  const locality: HTMLElement = document.querySelector('#locality') as HTMLElement;
+  const locality: HTMLElement = document.querySelector('#locality') as HTMLElement; // Ort rubrik
   locality.innerHTML = `<span>${data.station.name}</span>`;
 
   // Skriver ut vindhastighet
-  const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement;
+  const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Där vinden visas
   windSpeedNow.innerHTML = `<span>${dataWind.value[0].value}</span>`;
   console.log(data);
 }
 
+/** ******************************************************************************
+ ---------------------Bakgrundsbild ändras beroende på årstid---------------------
+ ******************************************************************************* */
 
-/**
- * TODO
- * [x] Det ska gå att klicka på stationerna som kommer upp som förslag
- * [x] Lista ut vilken jag klickar på
- * [x] Tempratur senaste timmen ska hämtas från rätt ställe
- * [x] Temp ska visas på skärmen
- * [x] Ort ska visas i ort rubriken
- * [x]  Vindhastighet ska visas
- * [] Lägg till nederbörd och andra parametrar
- * [] De stationer som inte har tempratur senaste timmen ska säga finns inte data för den här platsen
- * [] De ovan ska inte heller visa vindhastigheten
- * [] När jag klickar utanför stationsrutan och inputrutan ska den försvinna
- */
-
-/**
- * Bakgrundsbild ändras beroende på årstid
- */
-const backgroundImg: HTMLElement = document.querySelector('main') as HTMLElement;
 const today = new Date();
 
 if (today.getMonth() === 11 || today.getMonth() <= 1) {
@@ -159,7 +147,21 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
 }
 
 /**
- * TODO
+ * TODO 1
+ * [x] Det ska gå att klicka på stationerna som kommer upp som förslag
+ * [x] Lista ut vilken jag klickar på
+ * [x] Tempratur senaste timmen ska hämtas från rätt ställe
+ * [x] Temp ska visas på skärmen
+ * [x] Ort ska visas i ort rubriken
+ * [x]  Vindhastighet ska visas
+ * [] Lägg till nederbörd och andra parametrar
+ * [] De stationer som inte har tempratur senaste timmen ska säga finns inte data för den här platsen
+ * [] De ovan ska inte heller visa vindhastigheten
+ * [] När jag klickar utanför stationsrutan och inputrutan ska den försvinna
+ */
+
+/**
+ * TODO 2
  * [x] När jag klickar på inputrutan ska ett fält komma upp med en ul och li med min plats
  * [x] När fältet inte är markerat ska klassen förvinna
  * [] När jag klickar på min position ska webblöäsaren fråga efter användarens plats
