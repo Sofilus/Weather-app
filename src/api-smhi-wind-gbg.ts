@@ -5,7 +5,6 @@ const urlWind =
 async function getDataWind() {
   return fetch(urlWind)
     .then((data) => {
-      console.log(data);
       return data.json();
     })
     .then((json: object) => json)

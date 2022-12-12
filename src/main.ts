@@ -17,6 +17,10 @@ const searchDropdownPosition: HTMLElement = document.querySelector('#searchDropd
 const searchDropdownStations: HTMLElement = document.querySelector('#dropdownStations') as HTMLElement; // div dropdown med förslagna stationer när användaren söker efter ort sökrutan
 const ulSuggestedStation: HTMLElement = document.querySelector('#suggestedStations') as HTMLElement; // Ul med föslagna stationer som visas när användaren skriver i sökrutan
 const backgroundImg: HTMLElement = document.querySelector('main') as HTMLElement; // main
+const rainAmount: HTMLElement = document.querySelector('#rainAmount') as HTMLElement; // html element för nederbörd
+const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Html element för vinden
+const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement; // html element för tempraturen
+const locality: HTMLElement = document.querySelector('#locality') as HTMLElement; // html element för Ort rubrik
 
 /** ******************************************************************************
  --------------------- Begär åtkomst av användarens position----------------------
@@ -133,28 +137,30 @@ function stationSuggetions(): void {
  ******************************************************************************* */
 
 async function chosenStation(e) {
+
   const clickedStationIndex = e.target.id; // Klickad station får ett index i listan av förslagna stationer
-  const clickedStation = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
+  const clickedStationKey = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
+  const clickedStationName = filterStations[clickedStationIndex].name; // Får ut den klickade stationens namn
 
-  const data = await getChosenStationData(clickedStation, 'latest-hour', 1); // Skickar in parametrar key och period för temp
-  const dataWind = await getChosenStationData(clickedStation, 'latest-hour', 4); // Skickar in parametrar key och period för vind
-  const dataRain = await getChosenStationData(clickedStation, 'latest-hour', 7); // Skickar in key 7 och får ut nederbörd senaste timmen
-  console.log(dataWind);
+  const data = await getChosenStationData(clickedStationKey, 'latest-hour', 1); // Skickar in parametrar key och period för temp
+  const dataWind = await getChosenStationData(clickedStationKey, 'latest-hour', 4); // Skickar in parametrar key och period för vind
+  const dataRain = await getChosenStationData(clickedStationKey, 'latest-hour', 7); // Skickar in key 7 och får ut nederbörd senaste timmen
 
-  // Skriver ut tempratur från vald station på webbsidan
-  const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement; // html element för tempraturen
+  // Om värderna inte finns skriv ut -
+  temperatureNow.innerHTML = `<span> - </span>`; // Om stationen som är vald inte har tempraur skriv -
+  windSpeedNow.innerHTML = `<span> - </span>`; // Om stationen inte har vind senaste timmen skriv -
+  rainAmount.innerHTML = `<span> - </span>`; // Om stationen inte har nederbörd senaste timmen skriv -
+
+  // Skriver ut orten som klickas på som rubrik på webbsidan
+  locality.innerHTML = `<span>${clickedStationName}</span>`;
+
+  // Skriver ut tempratur om det finns från den valda station på webbsidan
   temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
 
-  // Skriver ut orten
-  const locality: HTMLElement = document.querySelector('#locality') as HTMLElement; // html element för Ort rubrik
-  locality.innerHTML = `<span>${data.station.name}</span>`;
-
-  // Skriver ut vindhastighet
-  const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Html element för vinden
+  // Skriver ut vindhastighet om det finns från den valda station på webbsidan
   windSpeedNow.innerHTML = `<span>${dataWind.value[0].value}</span>`;
 
-  // skriver ut nederbörd
-  const rainAmount: HTMLElement = document.querySelector('#rainAmount') as HTMLElement; // html element för nederbörd
+  // skriver ut nederbörds värde om det finns från den valda station på webbsidan
   rainAmount.innerHTML = `<span>${dataRain.value[0].value}</span>`;
 }
 
@@ -185,8 +191,8 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
  * [x] Lägg till nederbörd och andra parametrar
  * [] De stationer som inte har tempratur senaste timmen ska säga finns inte data för den här platsen
  * [x] De ovan ska inte heller visa vindhastigheten eller andra parametrar
- * [] Ha en station som utgångsstation, som visas från början
- * [] Nollställer inte värdet i vind om det inte finns på den stationen utan håller samma värde från innan
+ * [x] Ha en station som utgångsstation, som visas från början
+ * [] Nollställer inte värdet i vind och regn om det inte finns på den stationen utan håller samma värde från innan
  * [] När jag klickar utanför stationsrutan och inputrutan ska den försvinna
  */
 

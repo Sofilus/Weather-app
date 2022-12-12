@@ -5,7 +5,6 @@ const urlTempLastHourGbg =
 async function getDataLastHour() {
   return fetch(urlTempLastHourGbg)
     .then((data) => {
-      console.log(data);
       return data.json();
     })
     .then((json: object) => json)
