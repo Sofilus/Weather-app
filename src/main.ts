@@ -35,7 +35,7 @@ const errorCallback = (error) => {
 navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 
 /** ******************************************************************************
- -------------Station som alltid visas visas när vi kommer in på sidan-----------
+ -------------Göteborg som alltid visas visas när vi kommer in på sidan-----------
  ******************************************************************************* */
 
 async function dataGothenburg() {
@@ -53,6 +53,9 @@ async function dataGothenburg() {
   // Skriver ut vindhastighet
   const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Html element för vinden
   windSpeedNow.innerHTML = `<span>${dataWind.value[0].value}</span>`;
+
+  // Skriver ut att det inte finns värde på nederbörd
+  rainAmount.innerHTML = `<span> - </span>`;
 }
  
 dataGothenburg();
@@ -189,10 +192,10 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
  * [x] Ort ska visas i ort rubriken
  * [x]  Vindhastighet ska visas
  * [x] Lägg till nederbörd och andra parametrar
- * [] De stationer som inte har tempratur senaste timmen ska säga finns inte data för den här platsen
+ * [x] De stationer som inte har tempratur senaste timmen ska säga finns inte data för den här platsen
  * [x] De ovan ska inte heller visa vindhastigheten eller andra parametrar
  * [x] Ha en station som utgångsstation, som visas från början
- * [] Nollställer inte värdet i vind och regn om det inte finns på den stationen utan håller samma värde från innan
+ * [x] Nollställer inte värdet i vind och regn om det inte finns på den stationen utan håller samma värde från innan
  * [] När jag klickar utanför stationsrutan och inputrutan ska den försvinna
  */
 
