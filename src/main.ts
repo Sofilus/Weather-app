@@ -114,20 +114,24 @@ async function chosenStation(e) {
 
   const data = await getChosenStationData(clickedStation, 'latest-hour', 1); // Skickar in parametrar key och period för temp
   const dataWind = await getChosenStationData(clickedStation, 'latest-hour', 4); // Skickar in parametrar key och period för vind
+  const dataRain = await getChosenStationData(clickedStation, 'latest-hour', 7); // Skickar in key 7 och får ut nederbörd senaste timmen
   console.log(dataWind);
 
   // Skriver ut tempratur från vald station på webbsidan
-  const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement; // Där tempraturen visas
+  const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement; // html element för tempraturen
   temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
 
   // Skriver ut orten
-  const locality: HTMLElement = document.querySelector('#locality') as HTMLElement; // Ort rubrik
+  const locality: HTMLElement = document.querySelector('#locality') as HTMLElement; // html element för Ort rubrik
   locality.innerHTML = `<span>${data.station.name}</span>`;
 
   // Skriver ut vindhastighet
-  const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Där vinden visas
+  const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Html element för vinden
   windSpeedNow.innerHTML = `<span>${dataWind.value[0].value}</span>`;
-  console.log(data);
+
+  // skriver ut nederbörd
+  const rainAmount: HTMLElement = document.querySelector('#rainAmount') as HTMLElement; // html element för nederbörd
+  rainAmount.innerHTML = `<span>${dataRain.value[0].value}</span>`;
 }
 
 /** ******************************************************************************
