@@ -21,18 +21,8 @@ const rainAmount: HTMLElement = document.querySelector('#rainAmount') as HTMLEle
 const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Html element för vinden
 const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement; // html element för tempraturen
 const locality: HTMLElement = document.querySelector('#locality') as HTMLElement; // html element för Ort rubrik
-
-/** ******************************************************************************
- --------------------- Begär åtkomst av användarens position----------------------
- ******************************************************************************* */
-
-const successCallback = (position: object) => {
-  console.log(position);
-};
-const errorCallback = (error) => {
-  console.log(error);
-};
-navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+const test = document.querySelector('#test'); // test ruta i footer
+const myPosition = document.querySelector('#myPosition'); // li min position
 
 /** ******************************************************************************
  -------------Göteborg som alltid visas visas när vi kommer in på sidan-----------
@@ -67,7 +57,6 @@ dataGothenburg();
 
 // Skapar eventlisteners till när användaren interagerar med sökrutan
 searchField?.addEventListener('input', openDropdowns);
-searchField?.addEventListener('blur', closeDropdownPosition);
 searchField?.addEventListener('focus', openDropdownPosition);
 
 // Öppnar och stänger dropdowns när vi skriver i inputrutan
@@ -86,22 +75,56 @@ function openDropdownPosition(): void {
   searchDropdownPosition.classList.remove('display-none');
 }
 
-// Stänger dropdown när vi klickar utanför inputrutan
-function closeDropdownPosition(): void {
-  searchDropdownPosition.classList.add('display-none');
-}
 
 /** ******************************************************************************
- ------------------------Hämtar alla stationer från smhis API---------------------
+ --------------------- Begär åtkomst av användarens position----------------------
  ******************************************************************************* */
+
+
+
+
+/** *******************************************************************************************
+ Hämtar alla stationer från smhis API samt lokaliserar närmaste station när min position klickas
+ ********************************************************************************************* */
 
 let stations: Array<object> = []; // Arrayen med alla stationer
 
-// Hämtar alla stationer från API
+// Hämtar alla stationer från API samt min position och visar närmaste station när min position klickas
 async function dataAllStationsLastHour(): Promise<void> {
   // väntar på all data hämtas från APIn innan den skriver ut datan på sidan
   const data: object = (await getDataAllStationsLastHour()) as object;
   stations = data.station;
+
+  myPosition?.addEventListener('click', getUserLocation);
+
+  // Begär åtkomst av användarens position
+  function getUserLocation (){
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      test.innerHTML = 'Position finns inte';
+    }
+  }
+
+  // Visar närmaste station
+  function showPosition(position) {
+    let shortestDistance = -1;
+
+    // Kollar efter alla stationers longitude och latitude samt jämför avstånd mellan användarens position och stationerna
+    for (let i = 0; i < stations.length; i++) {
+      // Hämtar alla stationernas long och lat
+      const latitude = stations[i].latitude;
+      const longitude = stations[i].longitude;
+
+      // Jämför avstånd mellan stationer och användarens position genom pytagoras
+      const compareLatitude = latitude - position.coords.latitude;
+      const compareLongitude = longitude - position.coords.longitude;
+      const diffrenceLongLat = Math.sqrt((compareLatitude ** 2) + (compareLongitude ** 2));
+      if(diffrenceLongLat < shortestDistance || (shortestDistance == -1)){
+        shortestDistance = diffrenceLongLat;
+      }
+    }
+  }
 }
 
 await dataAllStationsLastHour();
@@ -182,27 +205,13 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
 } else {
   backgroundImg.classList.add('fall-img');
 }
-
 /**
  * TODO 1
- * [x] Det ska gå att klicka på stationerna som kommer upp som förslag
- * [x] Lista ut vilken jag klickar på
- * [x] Tempratur senaste timmen ska hämtas från rätt ställe
- * [x] Temp ska visas på skärmen
- * [x] Ort ska visas i ort rubriken
- * [x]  Vindhastighet ska visas
- * [x] Lägg till nederbörd och andra parametrar
- * [x] De stationer som inte har tempratur senaste timmen ska säga finns inte data för den här platsen
- * [x] De ovan ska inte heller visa vindhastigheten eller andra parametrar
- * [x] Ha en station som utgångsstation, som visas från början
- * [x] Nollställer inte värdet i vind och regn om det inte finns på den stationen utan håller samma värde från innan
  * [] När jag klickar utanför stationsrutan och inputrutan ska den försvinna
  */
 
 /**
  * TODO 2
- * [x] När jag klickar på inputrutan ska ett fält komma upp med en ul och li med min plats
- * [x] När fältet inte är markerat ska klassen förvinna
  * [] När jag klickar på min position ska webblöäsaren fråga efter användarens plats
  * [] Koordinaterna ska skrivas ut som en plats
  * [] Min position ska skrivas ut i rubriken ort
