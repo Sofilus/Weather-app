@@ -3,8 +3,8 @@
  ******************************************************************************* */
 
 import './style/style.scss';
-// import getDataLastHour from './api-smhi-temp-last-hour';
-// import getDataWind from './api-smhi-wind';
+import getDataLastHour from './api-smhi-temp-last-hour-gbg';
+import getDataWind from './api-smhi-wind-gbg';
 import getDataAllStationsLastHour from './api-smhi-lasthour-allstations';
 import getChosenStationData from './chosen-station-data';
 
@@ -29,6 +29,30 @@ const errorCallback = (error) => {
   console.log(error);
 };
 navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+
+/** ******************************************************************************
+ -------------Station som alltid visas visas när vi kommer in på sidan-----------
+ ******************************************************************************* */
+
+async function dataGothenburg() {
+  const data = await getDataLastHour();
+  const dataWind = await getDataWind();
+
+  // tempratur göteborg landvetter
+  const temperatureNow = document.querySelector('#temperatureNow');
+  temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
+
+  // Rubrik göteborg-landvetter flygplats
+  const locality = document.querySelector('#locality');
+  locality.innerHTML = `<span>${data.station.name}</span>`;
+
+  // Skriver ut vindhastighet
+  const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Html element för vinden
+  windSpeedNow.innerHTML = `<span>${dataWind.value[0].value}</span>`;
+}
+ 
+dataGothenburg();
+
 
 /** ******************************************************************************
  ----------------------------------Sökrutan, sök ort-----------------------------
@@ -158,10 +182,11 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
  * [x] Temp ska visas på skärmen
  * [x] Ort ska visas i ort rubriken
  * [x]  Vindhastighet ska visas
- * [] Lägg till nederbörd och andra parametrar
+ * [x] Lägg till nederbörd och andra parametrar
  * [] De stationer som inte har tempratur senaste timmen ska säga finns inte data för den här platsen
- * [] De ovan ska inte heller visa vindhastigheten eller andra parametrar
+ * [x] De ovan ska inte heller visa vindhastigheten eller andra parametrar
  * [] Ha en station som utgångsstation, som visas från början
+ * [] Nollställer inte värdet i vind om det inte finns på den stationen utan håller samma värde från innan
  * [] När jag klickar utanför stationsrutan och inputrutan ska den försvinna
  */
 
