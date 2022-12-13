@@ -55,9 +55,12 @@ dataGothenburg();
  ----------------------------------Sökrutan, sök ort-----------------------------
  ******************************************************************************* */
 
+ const fullPage = document.querySelector('#fullPage');
+
 // Skapar eventlisteners till när användaren interagerar med sökrutan
 searchField?.addEventListener('input', openDropdowns);
 searchField?.addEventListener('focus', openDropdownPosition);
+fullPage?.addEventListener('click', closeAllDropdowns)
 
 // Öppnar och stänger dropdowns när vi skriver i inputrutan
 function openDropdowns(): void {
@@ -73,6 +76,11 @@ function openDropdowns(): void {
 // Öppnar dropdown min position när jag har klickat och har fokus på inputrutan
 function openDropdownPosition(): void {
   searchDropdownPosition.classList.remove('display-none');
+}
+
+function closeAllDropdowns(): void {
+  searchDropdownPosition.classList.add('display-none');
+  searchDropdownStations.classList.add('display-none');
 }
 
 /** *******************************************************************************************
@@ -214,10 +222,5 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
 /**
  * TODO 1
  * [] När jag klickar utanför stationsrutan och inputrutan ska den försvinna
- */
-
-/**
- * TODO 2
- * [] Flytta ut de som står från rad 164 till en egen funktion och länka in den i den de står i just nu samt i den som ska visa min position
- * [] Min position ska skrivas ut i rubriken ort
+ * [] Gör dgenom att skapa en div som täcker hela sidan och sedan sätta z index högre på sökrutan och divarna
  */
