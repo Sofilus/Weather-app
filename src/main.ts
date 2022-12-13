@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /** ******************************************************************************
  -----------------------------------Importer-------------------------------------
  ******************************************************************************* */
@@ -30,11 +31,10 @@ const myPosition = document.querySelector('#myPosition'); // li min position
  ******************************************************************************* */
 
 async function dataGothenburg() {
-  const data = await getDataLastHour();
+  const data: object | null = await getDataLastHour();
   const dataWind = await getDataWind();
 
   // tempratur göteborg landvetter
-  const temperatureNow = document.querySelector('#temperatureNow');
   temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
 
   // Rubrik göteborg-landvetter flygplats
@@ -59,11 +59,11 @@ dataGothenburg();
 
 // Skapar eventlisteners till när användaren interagerar med sökrutan
 searchField?.addEventListener('input', openDropdowns);
-searchField?.addEventListener('focus', openDropdownPosition);
-fullPage?.addEventListener('click', closeAllDropdowns)
+searchField?.addEventListener('click', openDropdownPosition);
+window.addEventListener('click', closeAllDropdowns);
 
 // Öppnar och stänger dropdowns när vi skriver i inputrutan
-function openDropdowns(): void {
+function openDropdowns(e): void {
   if (searchField.value === '') {
     searchDropdownPosition.classList.remove('display-none');
     searchDropdownStations.classList.add('display-none');
@@ -74,11 +74,12 @@ function openDropdowns(): void {
 }
 
 // Öppnar dropdown min position när jag har klickat och har fokus på inputrutan
-function openDropdownPosition(): void {
+function openDropdownPosition(e): void {
+  e.stopPropagation();
   searchDropdownPosition.classList.remove('display-none');
 }
 
-function closeAllDropdowns(): void {
+function closeAllDropdowns(e): void {
   searchDropdownPosition.classList.add('display-none');
   searchDropdownStations.classList.add('display-none');
 }
@@ -218,9 +219,6 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
   temperatureNowContainer.classList.add('fall-decoration-img');
 }
 
-
 /**
- * TODO 1
- * [] När jag klickar utanför stationsrutan och inputrutan ska den försvinna
- * [] Gör dgenom att skapa en div som täcker hela sidan och sedan sätta z index högre på sökrutan och divarna
+ * [] position ska komma när jag klickar i rutan
  */
