@@ -166,12 +166,31 @@ form input {
   margin: 0 auto;
   margin-top: 30px;
   margin-bottom: 40px;
-  background-image: url('/public/snowflakes-white.png');
-  background-size: cover;
+  background-color: white;
   text-align: center;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.winter-decoration-img{
+  background-image: url('/public/snowflakes-white.png');
+  background-size: cover;
+}
+
+.spring-decoration-img{
+  background: rgb(236,225,216);
+background: linear-gradient(90deg, rgba(236,225,216,0.804359243697479) 7%, rgba(240,231,201,0.8155637254901961) 34%, rgba(226,220,210,0.773546918767507) 70%, rgba(233,229,208,0.7875525210084033) 100%);
+}
+
+.fall-decoration-img{
+  background-image: url('/public/fall-leaf.jpg');
+  background-size: cover;
+}
+
+.summer-decoration-img{
+  background-image: url('/public/summer-flower.jpg');
+  background-size: cover;
 }
 
 .temperature-over-time{
@@ -205,7 +224,7 @@ form input {
   min-height: 200px;
   padding: 10px;
   margin: 0 auto;
-  background-image: url('/public/snowflakes-white.png');
+  background-color: white;
   background-size: cover;
   text-align: center;
   border-radius: 10px;

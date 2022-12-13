@@ -16,7 +16,8 @@ const searchField: HTMLElement = document.querySelector('#searchField') as HTMLE
 const searchDropdownPosition: HTMLElement = document.querySelector('#searchDropdown') as HTMLElement; // Min position dropdown
 const searchDropdownStations: HTMLElement = document.querySelector('#dropdownStations') as HTMLElement; // div dropdown med förslagna stationer när användaren söker efter ort sökrutan
 const ulSuggestedStation: HTMLElement = document.querySelector('#suggestedStations') as HTMLElement; // Ul med föslagna stationer som visas när användaren skriver i sökrutan
-const backgroundImg: HTMLElement = document.querySelector('main') as HTMLElement; // main
+const backgroundImg: HTMLElement = document.querySelector('main') as HTMLElement; // main bakgrundbild
+const temperatureNowContainer: HTMLElement = document.querySelector('#temperatureNowContainer') as HTMLElement; // container med temperatur, hämtad för att ändra bakgrundbild
 const rainAmount: HTMLElement = document.querySelector('#rainAmount') as HTMLElement; // html element för nederbörd
 const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Html element för vinden
 const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement; // html element för tempraturen
@@ -186,18 +187,23 @@ async function chosenStation(e) {
 /** ******************************************************************************
  ---------------------Bakgrundsbild ändras beroende på årstid---------------------
  ******************************************************************************* */
-
-const today = new Date();
+const today = new Date('december 22, 2022 10:00:00');
 
 if (today.getMonth() === 11 || today.getMonth() <= 1) {
   backgroundImg.classList.add('winter-img');
+  temperatureNowContainer.classList.add('winter-decoration-img');
 } else if (today.getMonth() === 2 || today.getMonth() <= 4) {
   backgroundImg.classList.add('spring-img');
+  temperatureNowContainer.classList.add('spring-decoration-img');
 } else if (today.getMonth() === 5 || today.getMonth() <= 7) {
   backgroundImg.classList.add('summer-img');
+  temperatureNowContainer.classList.add('summer-decoration-img');
 } else {
   backgroundImg.classList.add('fall-img');
+  temperatureNowContainer.classList.add('fall-decoration-img');
 }
+
+
 /**
  * TODO 1
  * [] När jag klickar utanför stationsrutan och inputrutan ska den försvinna
