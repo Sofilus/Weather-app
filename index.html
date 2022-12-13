@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Laila:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="https://kit.fontawesome.com/364f1f7cab.js" crossorigin="anonymous" defer></script>
     <title>Projekt</title>
@@ -15,22 +17,25 @@
         </section>
       </header>
       <main class="background-img" id="backgroundImg">
-          <form action="">
-            <input type="text" placeholder="Sök ort" name="search" id="searchField" autocomplete="off">
-            <button type="submit" id="searchBtn"></button>
-          </form>
-          <div class="search-dropdown display-none" id="searchDropdown" >
-            <ul>
-              <li id="myPosition">Min position</li>
-            </ul>
+        <form action="">
+          <input type="text" placeholder="Sök och välj ort" name="search" id="searchField" autocomplete="off">
+          <div class="magnifying-glass">
+            <i class="fa-solid fa-magnifying-glass"></i>
           </div>
-          <div class="stations-container display-none" id="dropdownStations">
-            <ul id="suggestedStations"></ul>
-          </div>
-          <section class="temperature-container">
-            <h2 class="picked-location" id="locality"></h2>
-            <h3 class="temperature-over-time"> Tempratur senaste timmen</h3>
-            <div class="temperature-now-container">
+        </form>
+        <div class="search-dropdown display-none" id="searchDropdown" >
+          <ul>
+            <li id="myPosition">Min position</li>
+          </ul>
+        </div>
+        <div class="stations-container display-none" id="dropdownStations">
+          <ul id="suggestedStations"></ul>
+        </div>
+          <h2 class="picked-location" id="locality"></h2>
+        <div class="flex-parameters">
+          <section class="temperature-now-container">
+            <h3 class="temperature-over-time"> Temperatur senaste timmen</h3>
+            <div class="degrees">
               <p class="temperature" id="temperatureNow"></p>
               <p class="temperature-icon">°</p>
             </div>
@@ -48,8 +53,9 @@
               <p id="rainAmount" class="other"></p>
               <p class="other">mm</p>
             </div>
-          </section>
-        <article>
+        </section>
+        </div>
+        
       </main>
     </div>
     <footer>

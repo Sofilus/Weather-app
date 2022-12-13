@@ -50,7 +50,6 @@ async function dataGothenburg() {
  
 dataGothenburg();
 
-
 /** ******************************************************************************
  ----------------------------------Sökrutan, sök ort-----------------------------
  ******************************************************************************* */
@@ -75,14 +74,6 @@ function openDropdownPosition(): void {
   searchDropdownPosition.classList.remove('display-none');
 }
 
-
-/** ******************************************************************************
- --------------------- Begär åtkomst av användarens position----------------------
- ******************************************************************************* */
-
-
-
-
 /** *******************************************************************************************
  Hämtar alla stationer från smhis API samt lokaliserar närmaste station när min position klickas
  ********************************************************************************************* */
@@ -98,7 +89,7 @@ async function dataAllStationsLastHour(): Promise<void> {
   myPosition?.addEventListener('click', getUserLocation);
 
   // Begär åtkomst av användarens position
-  function getUserLocation (){
+  function getUserLocation() {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {
@@ -109,9 +100,10 @@ async function dataAllStationsLastHour(): Promise<void> {
   // Visar närmaste station
   function showPosition(position) {
     let shortestDistance = -1;
-
+    let index = NaN;
     // Kollar efter alla stationers longitude och latitude samt jämför avstånd mellan användarens position och stationerna
     for (let i = 0; i < stations.length; i++) {
+
       // Hämtar alla stationernas long och lat
       const latitude = stations[i].latitude;
       const longitude = stations[i].longitude;
@@ -120,11 +112,12 @@ async function dataAllStationsLastHour(): Promise<void> {
       const compareLatitude = latitude - position.coords.latitude;
       const compareLongitude = longitude - position.coords.longitude;
       const diffrenceLongLat = Math.sqrt((compareLatitude ** 2) + (compareLongitude ** 2));
-      if(diffrenceLongLat < shortestDistance || (shortestDistance == -1)){
+      if(diffrenceLongLat < shortestDistance || (shortestDistance === -1)){
         shortestDistance = diffrenceLongLat;
-      }
+        index = i;
+      }console.log(stations[index])
     }
-  }
+  } 
 }
 
 await dataAllStationsLastHour();
@@ -212,7 +205,6 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
 
 /**
  * TODO 2
- * [] När jag klickar på min position ska webblöäsaren fråga efter användarens plats
- * [] Koordinaterna ska skrivas ut som en plats
+ * [] Flytta ut de som står från rad 164 till en egen funktion och länka in den i den de står i just nu samt i den som ska visa min position
  * [] Min position ska skrivas ut i rubriken ort
  */

@@ -4,13 +4,14 @@
 header {
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
-  height: 170px;
+  height: 200px;
+  font-family: 'Laila', sans-serif;
 }
 
 h1 {
   margin-bottom: 60px;
   text-align: center;
-  padding-top: 40px;
+  padding-top: 50px;
   font-size: 4rem;
 }
 
@@ -19,34 +20,28 @@ h1 {
 ------------------------------------------- */
 .fall-img {
   background-image: url('/public/Fall.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .summer-img {
   background-image: url('/public/summer.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .spring-img {
   background-image: url('/public/Spring.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .winter-img {
   background-image: url('/public/Winter.jpg');
+}
+
+.background-img{
   background-size: cover;
   background-repeat: no-repeat;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  padding: 10px;
+  min-height: 1000px;
+  font-family: 'Rubik', sans-serif;
 }
 
 /* ------------------------------------------
@@ -58,8 +53,8 @@ form {
   justify-content: end;
   align-items: center;
   position: absolute;
-  top: 180px;
-  right: 30vw;
+  top: 210px;
+  right: 20vw;
 }
 
 form input {
@@ -70,7 +65,10 @@ form input {
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-form button {
+.magnifying-glass {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 40px;
   width: 40px;
   border: none;
@@ -79,22 +77,28 @@ form button {
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
+.fa-magnifying-glass{
+  color: white;
+  font-size: 1.5rem;
+}
+
 .search-dropdown {
   height: 60px;
   width: 240px;
-  background-color: white;
   position: absolute;
-  top: 220px;
-  right: 30vw;
+  top: 250px;
+  right: 20vw;
+  background-color: rgb(212, 212, 212);
 }
 
 .search-dropdown ul {
   list-style: none;
   font-size: 1.1rem;
+  
 }
 
 .search-dropdown:hover {
-  background-color: aqua;
+  background-color: rgb(255, 255, 255);
 }
 
 .display-none {
@@ -102,12 +106,12 @@ form button {
 }
 
 .stations-container ul {
-  background-color: rgb(165, 206, 224);
+  background-color: rgb(198, 199, 199);
   min-height: 55px;
   width: 240px;
   position: absolute;
-  top: 204px;
-  right: 30vw;
+  top: 233px;
+  right: 20vw;
   padding: 0;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -140,75 +144,73 @@ form button {
 }
 
 .picked-location {
-  padding: 5px;
+  padding: 20px;
   width: 80vw;
   max-width: 550px;
   margin: 0 auto;
   font-size: 2rem;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 60px;
   background-color: rgb(250, 250, 250);
-  border-bottom: black solid 2px;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-}
-
-.temperature-over-time {
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  width: 80vw;
-  max-width: 550px;
-  margin: 0 auto;
-  text-align: center;
-  padding: 10px;
-  font-size: 1.4rem;
-  background-color: rgb(250, 250, 250);
+  border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .temperature-now-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   width: 80vw;
   max-width: 400px;
   height: 300px;
   margin: 0 auto;
-  margin-top: 10px;
+  margin-top: 30px;
   margin-bottom: 40px;
-  background-color: rgb(250, 250, 250);
+  background-image: url('/public/snowflakes-white.png');
+  background-size: cover;
   text-align: center;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
+.temperature-over-time{
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+
+.degrees{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  height: 200px;
+}
+
 .temperature {
-  font-size: 10rem;
+  font-size: 8rem;
   line-height: 300px;
 }
 
 .temperature-icon {
   font-size: 6rem;
-  margin-top: 50px;
+  
 }
 
 .other-information {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 350px;
+  max-width: 400px;
   min-height: 200px;
   padding: 10px;
   margin: 0 auto;
-  background-color: rgb(250, 250, 250);
+  background-image: url('/public/snowflakes-white.png');
+  background-size: cover;
   text-align: center;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  margin-top: 10px;
 }
 
 .wind-speed-container {
@@ -223,6 +225,10 @@ form button {
   border-top: 2px solid black;
 }
 
+.wind-speed-container h3{
+  font-size: 1.3rem;
+}
+
 .other-icon {
   margin-right: 20px;
   font-size: 1.5rem;
@@ -230,7 +236,7 @@ form button {
 
 .other {
   margin-left: 10px;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 .rain-container {
@@ -242,6 +248,10 @@ form button {
   height: 80px;
   margin: 0 auto;
   border-bottom: 2px solid black;
+}
+
+.rain-container h3{
+  font-size: 1.3rem;
 }
 
 /* ------------------------------------------
