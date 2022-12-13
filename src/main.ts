@@ -116,8 +116,9 @@ async function dataAllStationsLastHour(): Promise<void> {
       if(diffrenceLongLat < shortestDistance || (shortestDistance === -1)){
         shortestDistance = diffrenceLongLat;
         index = i;
-      }console.log(stations[index])
+      }
     }
+    setSelectedStation(index);
   } 
 }
 
@@ -156,12 +157,17 @@ function stationSuggetions(): void {
  -------Identifierar station samt skriver ut temp och vind på webbsidan-----------
  ******************************************************************************* */
 
-async function chosenStation(e) {
+function chosenStation(e) {
 
   const clickedStationIndex = e.target.id; // Klickad station får ett index i listan av förslagna stationer
+ 
+  setSelectedStation(clickedStationIndex);
+}
+
+async function setSelectedStation(clickedStationIndex){
+  
   const clickedStationKey = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
   const clickedStationName = filterStations[clickedStationIndex].name; // Får ut den klickade stationens namn
-
   const data = await getChosenStationData(clickedStationKey, 'latest-hour', 1); // Skickar in parametrar key och period för temp
   const dataWind = await getChosenStationData(clickedStationKey, 'latest-hour', 4); // Skickar in parametrar key och period för vind
   const dataRain = await getChosenStationData(clickedStationKey, 'latest-hour', 7); // Skickar in key 7 och får ut nederbörd senaste timmen
@@ -184,6 +190,7 @@ async function chosenStation(e) {
   rainAmount.innerHTML = `<span>${dataRain.value[0].value}</span>`;
 }
 
+  
 /** ******************************************************************************
  ---------------------Bakgrundsbild ändras beroende på årstid---------------------
  ******************************************************************************* */
