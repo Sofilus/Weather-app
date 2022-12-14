@@ -1,3 +1,7 @@
+*{
+  box-sizing: border-box;
+}
+
 /* ------------------------------------------
 -----------------Header---------------------
 ------------------------------------------- */
@@ -14,6 +18,11 @@ h1 {
   text-align: center;
   padding-top: 50px;
   font-size: 4rem;
+}
+
+header p{
+  height: 30px;
+  background-color: blue;
 }
 
 /* ------------------------------------------
@@ -49,7 +58,7 @@ h1 {
 -----------------Searching field-------------
 ------------------------------------------- */
 
-form {
+label {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -59,7 +68,7 @@ form {
   z-index: 2;
 }
 
-form input {
+label input {
   border: black solid 2px;
   width: 200px;
   height: 40px;
@@ -72,6 +81,9 @@ form input {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 210px;
+  right: 20vw;
   height: 40px;
   width: 40px;
   border: none;

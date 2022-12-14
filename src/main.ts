@@ -13,7 +13,7 @@ import getChosenStationData from './chosen-station-data';
  ------------------------Hämtade element från html-------------------------------
  ******************************************************************************* */
 
-const searchField: HTMLElement = document.querySelector('#searchField') as HTMLElement; // Sökrutan
+const searchField: HTMLInputElement = document.querySelector('#searchField') as HTMLInputElement; // Sökrutan
 const searchDropdownPosition: HTMLElement = document.querySelector('#searchDropdown') as HTMLElement; // Min position dropdown
 const searchDropdownStations: HTMLElement = document.querySelector('#dropdownStations') as HTMLElement; // div dropdown med förslagna stationer när användaren söker efter ort sökrutan
 const ulSuggestedStation: HTMLElement = document.querySelector('#suggestedStations') as HTMLElement; // Ul med föslagna stationer som visas när användaren skriver i sökrutan
@@ -23,7 +23,7 @@ const rainAmount: HTMLElement = document.querySelector('#rainAmount') as HTMLEle
 const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Html element för vinden
 const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement; // html element för tempraturen
 const locality: HTMLElement = document.querySelector('#locality') as HTMLElement; // html element för Ort rubrik
-const test = document.querySelector('#test'); // test ruta i footer
+const positionDoesNotExist: HTMLElement = document.querySelector('#positionDoesNotExist') as HTMLElement; // test ruta i footer
 const myPosition = document.querySelector('#myPosition'); // li min position
 
 /** ******************************************************************************
@@ -31,39 +31,30 @@ const myPosition = document.querySelector('#myPosition'); // li min position
  ******************************************************************************* */
 
 async function dataGothenburg() {
-  const data: object | null = await getDataLastHour();
-  const dataWind = await getDataWind();
+  const data: object = await getDataLastHour() as object;
+  const dataWind: object | null = await getDataWind();
 
   // tempratur göteborg landvetter
   temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
 
   // Rubrik göteborg-landvetter flygplats
-  const locality = document.querySelector('#locality');
   locality.innerHTML = `<span>${data.station.name}</span>`;
 
   // Skriver ut vindhastighet
-  const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Html element för vinden
   windSpeedNow.innerHTML = `<span>${dataWind.value[0].value}</span>`;
 
   // Skriver ut att det inte finns värde på nederbörd
-  rainAmount.innerHTML = `<span> - </span>`;
+  rainAmount.innerHTML = '<span> - </span>';
 }
- 
-dataGothenburg();
+
+await dataGothenburg();
 
 /** ******************************************************************************
  ----------------------------------Sökrutan, sök ort-----------------------------
  ******************************************************************************* */
 
- const fullPage = document.querySelector('#fullPage');
-
-// Skapar eventlisteners till när användaren interagerar med sökrutan
-searchField?.addEventListener('input', openDropdowns);
-searchField?.addEventListener('click', openDropdownPosition);
-window.addEventListener('click', closeAllDropdowns);
-
 // Öppnar och stänger dropdowns när vi skriver i inputrutan
-function openDropdowns(e): void {
+function openDropdowns(): void {
   if (searchField.value === '') {
     searchDropdownPosition.classList.remove('display-none');
     searchDropdownStations.classList.add('display-none');
@@ -74,16 +65,20 @@ function openDropdowns(e): void {
 }
 
 // Öppnar dropdown min position när jag har klickat och har fokus på inputrutan
-function openDropdownPosition(e): void {
+function openDropdownPosition(e:Event): void {
   e.stopPropagation();
   searchDropdownPosition.classList.remove('display-none');
 }
 
-function closeAllDropdowns(e): void {
+function closeAllDropdowns(): void {
   searchDropdownPosition.classList.add('display-none');
   searchDropdownStations.classList.add('display-none');
 }
 
+// Skapar eventlisteners till när användaren interagerar med sökrutan
+searchField?.addEventListener('input', openDropdowns);
+searchField?.addEventListener('click', openDropdownPosition);
+window.addEventListener('click', closeAllDropdowns);
 /** *******************************************************************************************
  Hämtar alla stationer från smhis API samt lokaliserar närmaste station när min position klickas
  ********************************************************************************************* */
@@ -96,39 +91,38 @@ async function dataAllStationsLastHour(): Promise<void> {
   const data: object = (await getDataAllStationsLastHour()) as object;
   stations = data.station;
 
-  myPosition?.addEventListener('click', getUserLocation);
-
-  // Begär åtkomst av användarens position
-  function getUserLocation() {
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      test.innerHTML = 'Position finns inte';
-    }
-  }
-
   // Visar närmaste station
-  function showPosition(position) {
+  function showPosition(position: number) {
     let shortestDistance = -1;
     let index = NaN;
     // Kollar efter alla stationers longitude och latitude samt jämför avstånd mellan användarens position och stationerna
     for (let i = 0; i < stations.length; i++) {
-
       // Hämtar alla stationernas long och lat
-      const latitude = stations[i].latitude;
-      const longitude = stations[i].longitude;
+      const latitude: number = stations[i].latitude as number;
+      const longitude: number = stations[i].longitude as number;
 
       // Jämför avstånd mellan stationer och användarens position genom pytagoras
       const compareLatitude = latitude - position.coords.latitude;
       const compareLongitude = longitude - position.coords.longitude;
       const diffrenceLongLat = Math.sqrt((compareLatitude ** 2) + (compareLongitude ** 2));
-      if(diffrenceLongLat < shortestDistance || (shortestDistance === -1)){
+      if (diffrenceLongLat < shortestDistance || (shortestDistance === -1)) {
         shortestDistance = diffrenceLongLat;
         index = i;
       }
     }
     setSelectedStation(index);
-  } 
+  }
+
+  // Begär åtkomst av användarens position
+  function getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      positionDoesNotExist.innerHTML = 'Position finns inte';
+    }
+  }
+
+  myPosition?.addEventListener('click', getUserLocation);
 }
 
 await dataAllStationsLastHour();
@@ -139,8 +133,6 @@ await dataAllStationsLastHour();
 
 // Kopierad array som kommer filtreras efter ort vi söker på
 let filterStations = [...stations];
-
-searchField?.addEventListener('input', stationSuggetions);
 
 // Jämför ordet som skrivs i inputrutan om det finns med i namet på några av stationerna
 function stationSuggetions(): void {
@@ -157,34 +149,33 @@ function stationSuggetions(): void {
       const suggestedStation = document.createTextNode(filterStations[i].name);
       liItem.appendChild(suggestedStation);
       ulSuggestedStation.appendChild(liItem);
-      liItem.addEventListener('click', chosenStation); // För att kunna klicka och välja en förslagen station i sökrutan
+      liItem?.addEventListener('click', chosenStation); // För att kunna klicka och välja en förslagen station i sökrutan
     }
   }
 }
 
+searchField?.addEventListener('input', stationSuggetions);
 /** ******************************************************************************
  -------Identifierar station samt skriver ut temp och vind på webbsidan-----------
  ******************************************************************************* */
 
-function chosenStation(e) {
+function chosenStation(e: Event) {
+  const clickedStationIndex: number = e.target.id as number; // Klickad station får ett index i listan av förslagna stationer
 
-  const clickedStationIndex = e.target.id; // Klickad station får ett index i listan av förslagna stationer
- 
   setSelectedStation(clickedStationIndex);
 }
 
-async function setSelectedStation(clickedStationIndex){
-  
-  const clickedStationKey = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
-  const clickedStationName = filterStations[clickedStationIndex].name; // Får ut den klickade stationens namn
+async function setSelectedStation(clickedStationIndex) {
+  const clickedStationKey: number = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
+  const clickedStationName: string = filterStations[clickedStationIndex].name; // Får ut den klickade stationens namn
   const data = await getChosenStationData(clickedStationKey, 'latest-hour', 1); // Skickar in parametrar key och period för temp
   const dataWind = await getChosenStationData(clickedStationKey, 'latest-hour', 4); // Skickar in parametrar key och period för vind
   const dataRain = await getChosenStationData(clickedStationKey, 'latest-hour', 7); // Skickar in key 7 och får ut nederbörd senaste timmen
-
+  
   // Om värderna inte finns skriv ut -
-  temperatureNow.innerHTML = `<span> - </span>`; // Om stationen som är vald inte har tempraur skriv -
-  windSpeedNow.innerHTML = `<span> - </span>`; // Om stationen inte har vind senaste timmen skriv -
-  rainAmount.innerHTML = `<span> - </span>`; // Om stationen inte har nederbörd senaste timmen skriv -
+  temperatureNow.innerHTML = '<span> - </span>'; // Om stationen som är vald inte har tempraur skriv -
+  windSpeedNow.innerHTML = '<span> - </span>'; // Om stationen inte har vind senaste timmen skriv -
+  rainAmount.innerHTML = '<span> - </span>'; // Om stationen inte har nederbörd senaste timmen skriv -
 
   // Skriver ut orten som klickas på som rubrik på webbsidan
   locality.innerHTML = `<span>${clickedStationName}</span>`;
@@ -199,7 +190,6 @@ async function setSelectedStation(clickedStationIndex){
   rainAmount.innerHTML = `<span>${dataRain.value[0].value}</span>`;
 }
 
-  
 /** ******************************************************************************
  ---------------------Bakgrundsbild ändras beroende på årstid---------------------
  ******************************************************************************* */
@@ -218,7 +208,3 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
   backgroundImg.classList.add('fall-img');
   temperatureNowContainer.classList.add('fall-decoration-img');
 }
-
-/**
- * [] position ska komma när jag klickar i rutan
- */

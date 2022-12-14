@@ -2,26 +2,35 @@
 <html lang="sv">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Website about weather">
+    <meta name="robots" content="all">
+    <meta property="og:title" content="Last hour weather in Sweden">
+    <meta property="og:type" content="Portfolio">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="/public/weather.jpg">
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <link href="https://fonts.googleapis.com/css2?family=Laila:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
     <script src="https://kit.fontawesome.com/364f1f7cab.js" crossorigin="anonymous" defer></script>
-    <title>Projekt</title>
+    <title>Vädret idag</title>
   </head>
   <body>
       <header>
         <section class="header-container">
           <h1> Vädret idag </h1>
+          <p id="positionDoesNotExist"></p>
         </section>
       </header>
       <main class="background-img" id="backgroundImg">
-        <form action="">
+        <label for="searchField">
           <input type="text" placeholder="Sök och välj ort" name="search" id="searchField" autocomplete="off">
-          <div class="magnifying-glass">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </div>
-        </form>
+        </label>
+        <div class="magnifying-glass">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
         <div class="search-dropdown display-none" id="searchDropdown" >
           <ul>
             <li id="myPosition">Min position</li>
@@ -55,14 +64,7 @@
         </section>
         </div>
       </main>
-      <footer>
-        <p id="test">hej</p>
-      </footer>
+      <footer></footer>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
-<!-- TODO
-    - Validera HTML (kopiera den renderade HTML-koden): https://validator.w3.org/#validate_by_input
-    - Kontrollera tillgänglighet: https://www.a11yproject.com/checklist/ & Chrome Lighthouse/Firefox Accessibility Tools
-    - Validera genererade CSS: https://jigsaw.w3.org/css-validator/#validate_by_input
-    -->
