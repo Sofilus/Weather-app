@@ -145,11 +145,13 @@ function stationSuggetions(): void {
   for (let i = 0; i < 5; i++) {
     if (filterStations[i]) {
       const liItem = document.createElement('li');
+      liItem.setAttribute('tabindex', '3');
       liItem.id = [i]; // ger varje li ett id i form av indexet
       const suggestedStation = document.createTextNode(filterStations[i].name);
       liItem.appendChild(suggestedStation);
       ulSuggestedStation.appendChild(liItem);
       liItem?.addEventListener('click', chosenStation); // För att kunna klicka och välja en förslagen station i sökrutan
+      liItem?.addEventListener('keypress', enterOnStation);
     }
   }
 }
@@ -161,9 +163,16 @@ searchField?.addEventListener('input', stationSuggetions);
 
 function chosenStation(e: Event) {
   const clickedStationIndex: number = e.target.id as number; // Klickad station får ett index i listan av förslagna stationer
-
+  
   setSelectedStation(clickedStationIndex);
 }
+function enterOnStation(e: KeyboardEvent){
+  const clickedStationIndex: number = e.target.id as number; // Klickad station får ett index i listan av förslagna stationer
+    if(e.key === 'Enter'){
+      setSelectedStation(clickedStationIndex);
+    }
+  }
+
 
 async function setSelectedStation(clickedStationIndex) {
   const clickedStationKey: number = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
@@ -171,7 +180,7 @@ async function setSelectedStation(clickedStationIndex) {
   const data = await getChosenStationData(clickedStationKey, 'latest-hour', 1); // Skickar in parametrar key och period för temp
   const dataWind = await getChosenStationData(clickedStationKey, 'latest-hour', 4); // Skickar in parametrar key och period för vind
   const dataRain = await getChosenStationData(clickedStationKey, 'latest-hour', 7); // Skickar in key 7 och får ut nederbörd senaste timmen
-  
+
   // Om värderna inte finns skriv ut -
   temperatureNow.innerHTML = '<span> - </span>'; // Om stationen som är vald inte har tempraur skriv -
   windSpeedNow.innerHTML = '<span> - </span>'; // Om stationen inte har vind senaste timmen skriv -
@@ -193,7 +202,7 @@ async function setSelectedStation(clickedStationIndex) {
 /** ******************************************************************************
  ---------------------Bakgrundsbild ändras beroende på årstid---------------------
  ******************************************************************************* */
-const today = new Date('december 22, 2022 10:00:00');
+const today = new Date();
 
 if (today.getMonth() === 11 || today.getMonth() <= 1) {
   backgroundImg.classList.add('winter-img');
@@ -208,3 +217,7 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
   backgroundImg.classList.add('fall-img');
   temperatureNowContainer.classList.add('fall-decoration-img');
 }
+
+/**
+ * Det ska gå att tabba och välja li, kan va så att jag får göra om till lista som fälls ner
+ */
