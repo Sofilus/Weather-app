@@ -13,18 +13,18 @@ import getChosenStationData from './chosen-station-data';
  ------------------------Hämtade element från html-------------------------------
  ******************************************************************************* */
 
-const searchField: HTMLInputElement = document.querySelector('#searchField') as HTMLInputElement; // Sökrutan
-const searchDropdownPosition: HTMLElement = document.querySelector('#searchDropdown') as HTMLElement; // Min position dropdown
-const searchDropdownStations: HTMLElement = document.querySelector('#dropdownStations') as HTMLElement; // div dropdown med förslagna stationer när användaren söker efter ort sökrutan
-const ulSuggestedStation: HTMLElement = document.querySelector('#suggestedStations') as HTMLElement; // Ul med föslagna stationer som visas när användaren skriver i sökrutan
-const backgroundImg: HTMLElement = document.querySelector('main') as HTMLElement; // main bakgrundbild
-const temperatureNowContainer: HTMLElement = document.querySelector('#temperatureNowContainer') as HTMLElement; // container med temperatur, hämtad för att ändra bakgrundbild
-const rainAmount: HTMLElement = document.querySelector('#rainAmount') as HTMLElement; // html element för nederbörd
-const windSpeedNow: HTMLElement = document.querySelector('#windSpeed') as HTMLElement; // Html element för vinden
-const temperatureNow: HTMLElement = document.querySelector('#temperatureNow') as HTMLElement; // html element för tempraturen
-const locality: HTMLElement = document.querySelector('#locality') as HTMLElement; // html element för Ort rubrik
-const positionDoesNotExist: HTMLElement = document.querySelector('#positionDoesNotExist') as HTMLElement; // test ruta i footer
-const myPosition = document.querySelector('#myPosition'); // li min position
+const searchField = document.querySelector('#searchField') as HTMLInputElement; // Sökrutan
+const searchDropdownPosition = document.querySelector('#searchDropdown') as HTMLDivElement; // Min position dropdown
+const searchDropdownStations = document.querySelector('#dropdownStations') as HTMLDivElement; // div dropdown med förslagna stationer när användaren söker efter ort sökrutan
+const ulSuggestedStation = document.querySelector('#suggestedStations') as HTMLUListElement; // Ul med föslagna stationer som visas när användaren skriver i sökrutan
+const backgroundImg = document.querySelector('main') as HTMLElement; // main bakgrundbild
+const temperatureNowContainer = document.querySelector('#temperatureNowContainer') as HTMLParagraphElement; // container med temperatur, hämtad för att ändra bakgrundbild
+const rainAmount = document.querySelector('#rainAmount') as HTMLElement; // html element för nederbörd
+const windSpeedNow = document.querySelector('#windSpeed') as HTMLParagraphElement; // Html element för vinden
+const temperatureNow = document.querySelector('#temperatureNow') as HTMLParagraphElement; // html element för tempraturen
+const locality = document.querySelector('#locality') as HTMLHeadingElement; // html element för Ort rubrik
+const positionDoesNotExist = document.querySelector('#positionDoesNotExist') as HTMLParagraphElement; // test ruta i footer
+const myPosition = document.querySelector('#myPosition') as HTMLLIElement; // li min position
 
 /** ******************************************************************************
  -------------Göteborg som alltid visas visas när vi kommer in på sidan-----------
