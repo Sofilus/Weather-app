@@ -77,7 +77,8 @@ function closeAllDropdowns(): void {
 
 // Skapar eventlisteners till när användaren interagerar med sökrutan
 searchField?.addEventListener('input', openDropdowns);
-searchField?.addEventListener('click', openDropdownPosition);
+searchField?.addEventListener('click', openDropdownPosition)
+searchField?.addEventListener('focus', openDropdownPosition );
 window.addEventListener('click', closeAllDropdowns);
 /** *******************************************************************************************
  Hämtar alla stationer från smhis API samt lokaliserar närmaste station när min position klickas
@@ -123,6 +124,7 @@ async function dataAllStationsLastHour(): Promise<void> {
   }
 
   myPosition?.addEventListener('click', getUserLocation);
+  myPosition?.addEventListener('keypress', getUserLocation);
 }
 
 await dataAllStationsLastHour();
