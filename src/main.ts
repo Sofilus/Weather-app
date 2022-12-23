@@ -35,13 +35,16 @@ async function dataGothenburg() {
   const dataWind: object | null = await getDataWind();
 
   // tempratur göteborg landvetter
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
   temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
 
   // Rubrik göteborg-landvetter flygplats
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
   locality.innerHTML = `<span>${data.station.name}</span>`;
 
   // Skriver ut vindhastighet
-  windSpeedNow.innerHTML = `<span>${dataWind.value[0].value}</span>`;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
+  windSpeedNow.innerHTML = `<span>${dataWind?.value[0].value}</span>`;
 
   // Skriver ut att det inte finns värde på nederbörd
   rainAmount.innerHTML = '<span> - </span>';
@@ -80,6 +83,52 @@ searchField?.addEventListener('input', openDropdowns);
 searchField?.addEventListener('click', openDropdownPosition);
 searchField?.addEventListener('focus', openDropdownPosition);
 window.addEventListener('click', closeAllDropdowns);
+
+/** ******************************************************************************
+ -------Identifierar station samt skriver ut temp och vind på webbsidan-----------
+ ******************************************************************************* */
+async function setSelectedStation(clickedStationIndex: number) {
+  const clickedStationKey: number = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
+  const clickedStationName: string = filterStations[clickedStationIndex].name; // Får ut den klickade stationens namn
+  const data = await getChosenStationData(clickedStationKey, 'latest-hour', 1); // Skickar in parametrar key och period för temp
+  const dataWind = await getChosenStationData(clickedStationKey, 'latest-hour', 4); // Skickar in parametrar key och period för vind
+  const dataRain = await getChosenStationData(clickedStationKey, 'latest-hour', 7); // Skickar in key 7 och får ut nederbörd senaste timmen
+
+  // Om värderna inte finns skriv ut -
+  temperatureNow.innerHTML = '<span> - </span>'; // Om stationen som är vald inte har tempraur skriv -
+  windSpeedNow.innerHTML = '<span> - </span>'; // Om stationen inte har vind senaste timmen skriv -
+  rainAmount.innerHTML = '<span> - </span>'; // Om stationen inte har nederbörd senaste timmen skriv -
+
+  // Skriver ut orten som klickas på som rubrik på webbsidan
+  locality.innerHTML = `<span>${clickedStationName}</span>`;
+
+  // Skriver ut tempratur om det finns från den valda station på webbsidan
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
+  temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
+
+  // Skriver ut vindhastighet om det finns från den valda station på webbsidan
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
+  windSpeedNow.innerHTML = `<span>${dataWind.value[0].value}</span>`;
+
+  // skriver ut nederbörds värde om det finns från den valda station på webbsidan
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
+  rainAmount.innerHTML = `<span>${dataRain.value[0].value}</span>`;
+}
+
+async function chosenStation(e: Event) {
+  const clickedStationIndex: number = e?.target?.id as number; // Klickad station får ett index i listan av förslagna stationer
+
+  await setSelectedStation(clickedStationIndex);
+}
+async function enterOnStation(e: KeyboardEvent) {
+  if (e.key === 'Enter') {
+    const clickedStationIndex: number = e?.target?.id as number; // Klickad station får ett index i listan av förslagna stationer
+    await setSelectedStation(clickedStationIndex);
+  }
+}
+
+
+
 /** *******************************************************************************************
  Hämtar alla stationer från smhis API samt lokaliserar närmaste station när min position klickas
  ********************************************************************************************* */
@@ -93,7 +142,7 @@ async function dataAllStationsLastHour(): Promise<void> {
   stations = data.station;
 
   // Visar närmaste station
-  function showPosition(position: number) {
+  async function showPosition(position:object) {
     let shortestDistance = -1;
     let index = NaN;
     // Kollar efter alla stationers longitude och latitude samt jämför avstånd mellan användarens position och stationerna
@@ -103,7 +152,9 @@ async function dataAllStationsLastHour(): Promise<void> {
       const longitude: number = stations[i].longitude as number;
 
       // Jämför avstånd mellan stationer och användarens position genom pytagoras
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
       const compareLatitude = latitude - position.coords.latitude;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
       const compareLongitude = longitude - position.coords.longitude;
       const diffrenceLongLat = Math.sqrt((compareLatitude ** 2) + (compareLongitude ** 2));
       if (diffrenceLongLat < shortestDistance || (shortestDistance === -1)) {
@@ -111,7 +162,7 @@ async function dataAllStationsLastHour(): Promise<void> {
         index = i;
       }
     }
-    setSelectedStation(index);
+    await setSelectedStation(index);
   }
 
   // Begär åtkomst av användarens position
@@ -149,7 +200,7 @@ function stationSuggetions(): void {
     if (filterStations[i]) {
       const liItem = document.createElement('li');
       liItem.setAttribute('tabindex', '3');
-      liItem.id = [i]; // ger varje li ett id i form av indexet
+      liItem.id = String([i]); // ger varje li ett id i form av indexet
       const suggestedStation = document.createTextNode(filterStations[i].name);
       liItem.appendChild(suggestedStation);
       ulSuggestedStation.appendChild(liItem);
@@ -160,47 +211,6 @@ function stationSuggetions(): void {
 }
 
 searchField?.addEventListener('input', stationSuggetions);
-/** ******************************************************************************
- -------Identifierar station samt skriver ut temp och vind på webbsidan-----------
- ******************************************************************************* */
-
-function chosenStation(e: Event) {
-  const clickedStationIndex: number = e.target.id as number; // Klickad station får ett index i listan av förslagna stationer
-  
-  setSelectedStation(clickedStationIndex);
-}
-function enterOnStation(e: KeyboardEvent){
-  const clickedStationIndex: number = e.target.id as number; // Klickad station får ett index i listan av förslagna stationer
-    if(e.key === 'Enter'){
-      setSelectedStation(clickedStationIndex);
-    }
-  }
-
-
-async function setSelectedStation(clickedStationIndex) {
-  const clickedStationKey: number = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
-  const clickedStationName: string = filterStations[clickedStationIndex].name; // Får ut den klickade stationens namn
-  const data = await getChosenStationData(clickedStationKey, 'latest-hour', 1); // Skickar in parametrar key och period för temp
-  const dataWind = await getChosenStationData(clickedStationKey, 'latest-hour', 4); // Skickar in parametrar key och period för vind
-  const dataRain = await getChosenStationData(clickedStationKey, 'latest-hour', 7); // Skickar in key 7 och får ut nederbörd senaste timmen
-
-  // Om värderna inte finns skriv ut -
-  temperatureNow.innerHTML = '<span> - </span>'; // Om stationen som är vald inte har tempraur skriv -
-  windSpeedNow.innerHTML = '<span> - </span>'; // Om stationen inte har vind senaste timmen skriv -
-  rainAmount.innerHTML = '<span> - </span>'; // Om stationen inte har nederbörd senaste timmen skriv -
-
-  // Skriver ut orten som klickas på som rubrik på webbsidan
-  locality.innerHTML = `<span>${clickedStationName}</span>`;
-
-  // Skriver ut tempratur om det finns från den valda station på webbsidan
-  temperatureNow.innerHTML = `<span>${data.value[0].value}</span>`;
-
-  // Skriver ut vindhastighet om det finns från den valda station på webbsidan
-  windSpeedNow.innerHTML = `<span>${dataWind.value[0].value}</span>`;
-
-  // skriver ut nederbörds värde om det finns från den valda station på webbsidan
-  rainAmount.innerHTML = `<span>${dataRain.value[0].value}</span>`;
-}
 
 /** ******************************************************************************
  ---------------------Bakgrundsbild ändras beroende på årstid---------------------
