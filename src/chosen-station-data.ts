@@ -3,9 +3,9 @@ async function getChosenStationData(key: number, period: string, parameter: numb
   // eslint-disable-next-line max-len
   const url = `https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/${parameter}/station/${key}/period/${period}/data.json`;
   return fetch(url)
-    .then((data) => data.json())
+    .then(data => data.json())
     .then((json: object) => json)
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       return null;
     });

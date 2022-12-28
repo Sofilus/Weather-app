@@ -1,4 +1,4 @@
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -20,7 +20,7 @@ h1 {
   font-size: 4rem;
 }
 
-header p{
+header p {
   height: 30px;
 }
 
@@ -43,11 +43,11 @@ header p{
   background-image: url('/public/Winter.jpg');
 }
 
-.background-img{
+.background-img {
   background-size: cover;
   background-repeat: no-repeat;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-  rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   padding: 10px;
   min-height: 1000px;
   font-family: 'Rubik', sans-serif;
@@ -73,7 +73,7 @@ label input {
   height: 40px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    z-index: 2;
+  z-index: 2;
 }
 
 .magnifying-glass {
@@ -89,10 +89,10 @@ label input {
   background-color: black;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    z-index: 2;
+  z-index: 2;
 }
 
-.fa-magnifying-glass{
+.fa-magnifying-glass {
   color: white;
   font-size: 1.5rem;
 }
@@ -110,7 +110,6 @@ label input {
 .search-dropdown ul {
   list-style: none;
   font-size: 1.1rem;
-  
 }
 
 .search-dropdown:hover {
@@ -134,7 +133,7 @@ label input {
   border: black solid 1px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    z-index: 2;
+  z-index: 2;
 }
 
 .stations-container ul li {
@@ -190,32 +189,38 @@ label input {
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.winter-decoration-img{
+.winter-decoration-img {
   background-image: url('/public/snowflakes-white.png');
   background-size: cover;
 }
 
-.spring-decoration-img{
-  background: rgb(236,225,216);
-background: linear-gradient(90deg, rgba(236,225,216,0.804359243697479) 7%, rgba(240,231,201,0.8155637254901961) 34%, rgba(226,220,210,0.773546918767507) 70%, rgba(233,229,208,0.7875525210084033) 100%);
+.spring-decoration-img {
+  background: rgb(236, 225, 216);
+  background: linear-gradient(
+    90deg,
+    rgba(236, 225, 216, 0.804359243697479) 7%,
+    rgba(240, 231, 201, 0.8155637254901961) 34%,
+    rgba(226, 220, 210, 0.773546918767507) 70%,
+    rgba(233, 229, 208, 0.7875525210084033) 100%
+  );
 }
 
-.fall-decoration-img{
+.fall-decoration-img {
   background-image: url('/public/fall-leaf.jpg');
   background-size: cover;
 }
 
-.summer-decoration-img{
+.summer-decoration-img {
   background-image: url('/public/summer-flower.jpg');
   background-size: cover;
 }
 
-.temperature-over-time{
+.temperature-over-time {
   font-size: 1.5rem;
   margin-top: 20px;
 }
 
-.degrees{
+.degrees {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -230,7 +235,6 @@ background: linear-gradient(90deg, rgba(236,225,216,0.804359243697479) 7%, rgba(
 
 .temperature-icon {
   font-size: 6rem;
-  
 }
 
 .other-information {
@@ -261,7 +265,7 @@ background: linear-gradient(90deg, rgba(236,225,216,0.804359243697479) 7%, rgba(
   border-top: 2px solid black;
 }
 
-.wind-speed-container h3{
+.wind-speed-container h3 {
   font-size: 1.3rem;
 }
 
@@ -286,7 +290,7 @@ background: linear-gradient(90deg, rgba(236,225,216,0.804359243697479) 7%, rgba(
   border-bottom: 2px solid black;
 }
 
-.rain-container h3{
+.rain-container h3 {
   font-size: 1.3rem;
 }
 

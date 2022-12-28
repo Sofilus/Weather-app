@@ -27,14 +27,14 @@ const locality = document.querySelector('#locality') as HTMLHeadingElement; // h
 const positionDoesNotExist = document.querySelector('#positionDoesNotExist') as HTMLParagraphElement; // test ruta i footer
 const myPosition = document.querySelector('#myPosition') as HTMLLIElement; // li min position
 let stations: Array<object> = []; // Arrayen med alla stationer
-let filterStations = [...stations];// Kopierad array som kommer filtreras efter ort vi söker på
+let filterStations = [...stations]; // Kopierad array som kommer filtreras efter ort vi söker på
 
 /** ******************************************************************************
  -------------Göteborg som alltid visas visas när vi kommer in på sidan-----------
  ******************************************************************************* */
 
 async function dataGothenburg() {
-  const data: object = await getDataLastHour() as object;
+  const data: object = (await getDataLastHour()) as object;
   const dataWind: object | null = await getDataWind();
 
   // tempratur göteborg landvetter
@@ -71,7 +71,7 @@ function openDropdowns(): void {
 }
 
 // Öppnar dropdown min position när jag har klickat och har fokus på inputrutan
-function openDropdownPosition(e:Event): void {
+function openDropdownPosition(e: Event): void {
   e.stopPropagation();
   searchDropdownPosition.classList.remove('display-none');
 }
@@ -145,7 +145,7 @@ async function dataAllStationsLastHour(): Promise<void> {
   stations = data.station;
 
   // Visar närmaste station
-  async function showPosition(position:object) {
+  async function showPosition(position: object) {
     let shortestDistance = -1;
     let index = NaN;
     // Kollar efter alla stationers longitude och latitude samt jämför avstånd mellan användarens position och stationerna
@@ -159,8 +159,8 @@ async function dataAllStationsLastHour(): Promise<void> {
       const compareLatitude = latitude - position.coords.latitude;
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
       const compareLongitude = longitude - position.coords.longitude;
-      const diffrenceLongLat = Math.sqrt((compareLatitude ** 2) + (compareLongitude ** 2));
-      if (diffrenceLongLat < shortestDistance || (shortestDistance === -1)) {
+      const diffrenceLongLat = Math.sqrt(compareLatitude ** 2 + compareLongitude ** 2);
+      if (diffrenceLongLat < shortestDistance || shortestDistance === -1) {
         shortestDistance = diffrenceLongLat;
         index = i;
       }
@@ -175,7 +175,7 @@ async function dataAllStationsLastHour(): Promise<void> {
       navigator.geolocation.getCurrentPosition(showPosition);
       searchDropdownPosition.classList.add('display-none');
     } else {
-      positionDoesNotExist.innerHTML = 'Position finns inte';
+      positionDoesNotExist.innerHTML = 'Ingen position hittad';
     }
   }
 
@@ -195,7 +195,7 @@ function stationSuggetions(): void {
     ulSuggestedStation.innerHTML = '';
     // Skapar en ny array varje gång jag skriver en bokstav och jämför namnet och de i sökrutan
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    filterStations = stations.filter((station) => station.name.toLowerCase().includes(searchField.value.toLowerCase()));
+    filterStations = stations.filter(station => station.name.toLowerCase().includes(searchField.value.toLowerCase()));
   }
   // Skriver ut 5 eller färre stationsnamn i form av li element som matchar med de som skrivs i sökrutan
   for (let i = 0; i < 5; i++) {
