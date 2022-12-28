@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable max-len */
 /** ******************************************************************************
  -----------------------------------Importer-------------------------------------
@@ -25,6 +26,8 @@ const temperatureNow = document.querySelector('#temperatureNow') as HTMLParagrap
 const locality = document.querySelector('#locality') as HTMLHeadingElement; // html element för Ort rubrik
 const positionDoesNotExist = document.querySelector('#positionDoesNotExist') as HTMLParagraphElement; // test ruta i footer
 const myPosition = document.querySelector('#myPosition') as HTMLLIElement; // li min position
+let stations: Array<object> = []; // Arrayen med alla stationer
+let filterStations = [...stations];// Kopierad array som kommer filtreras efter ort vi söker på
 
 /** ******************************************************************************
  -------------Göteborg som alltid visas visas när vi kommer in på sidan-----------
@@ -88,7 +91,9 @@ window.addEventListener('click', closeAllDropdowns);
  -------Identifierar station samt skriver ut temp och vind på webbsidan-----------
  ******************************************************************************* */
 async function setSelectedStation(clickedStationIndex: number) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const clickedStationKey: number = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const clickedStationName: string = filterStations[clickedStationIndex].name; // Får ut den klickade stationens namn
   const data = await getChosenStationData(clickedStationKey, 'latest-hour', 1); // Skickar in parametrar key och period för temp
   const dataWind = await getChosenStationData(clickedStationKey, 'latest-hour', 4); // Skickar in parametrar key och period för vind
@@ -120,6 +125,7 @@ async function chosenStation(e: Event) {
 
   await setSelectedStation(clickedStationIndex);
 }
+
 async function enterOnStation(e: KeyboardEvent) {
   if (e.key === 'Enter') {
     const clickedStationIndex: number = e?.target?.id as number; // Klickad station får ett index i listan av förslagna stationer
@@ -127,18 +133,15 @@ async function enterOnStation(e: KeyboardEvent) {
   }
 }
 
-
-
 /** *******************************************************************************************
  Hämtar alla stationer från smhis API samt lokaliserar närmaste station när min position klickas
  ********************************************************************************************* */
-
-let stations: Array<object> = []; // Arrayen med alla stationer
 
 // Hämtar alla stationer från API samt min position och visar närmaste station när min position klickas
 async function dataAllStationsLastHour(): Promise<void> {
   // väntar på all data hämtas från APIn innan den skriver ut datan på sidan
   const data: object = (await getDataAllStationsLastHour()) as object;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   stations = data.station;
 
   // Visar närmaste station
@@ -168,6 +171,7 @@ async function dataAllStationsLastHour(): Promise<void> {
   // Begär åtkomst av användarens position
   function getUserLocation() {
     if (navigator.geolocation) {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       navigator.geolocation.getCurrentPosition(showPosition);
       searchDropdownPosition.classList.add('display-none');
     } else {
@@ -185,14 +189,12 @@ await dataAllStationsLastHour();
  ---------- Filtrera stationerna när användaren skriver i sökfältet---------------
  ******************************************************************************* */
 
-// Kopierad array som kommer filtreras efter ort vi söker på
-let filterStations = [...stations];
-
 // Jämför ordet som skrivs i inputrutan om det finns med i namet på några av stationerna
 function stationSuggetions(): void {
   if (stations) {
     ulSuggestedStation.innerHTML = '';
     // Skapar en ny array varje gång jag skriver en bokstav och jämför namnet och de i sökrutan
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     filterStations = stations.filter((station) => station.name.toLowerCase().includes(searchField.value.toLowerCase()));
   }
   // Skriver ut 5 eller färre stationsnamn i form av li element som matchar med de som skrivs i sökrutan
@@ -201,10 +203,13 @@ function stationSuggetions(): void {
       const liItem = document.createElement('li');
       liItem.setAttribute('tabindex', '3');
       liItem.id = String([i]); // ger varje li ett id i form av indexet
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const suggestedStation = document.createTextNode(filterStations[i].name);
       liItem.appendChild(suggestedStation);
       ulSuggestedStation.appendChild(liItem);
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       liItem?.addEventListener('click', chosenStation); // För att kunna klicka och välja en förslagen station i sökrutan
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       liItem?.addEventListener('keypress', enterOnStation);
     }
   }
@@ -230,7 +235,3 @@ if (today.getMonth() === 11 || today.getMonth() <= 1) {
   backgroundImg.classList.add('fall-img');
   temperatureNowContainer.classList.add('fall-decoration-img');
 }
-
-/**
- * Det ska gå att tabba och välja li, kan va så att jag får göra om till lista som fälls ner
- */
