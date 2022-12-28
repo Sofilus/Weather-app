@@ -90,17 +90,22 @@ window.addEventListener('click', closeAllDropdowns);
 /** ******************************************************************************
  -------Identifierar station samt skriver ut temp och vind på webbsidan-----------
  ******************************************************************************* */
-async function setSelectedStation(clickedStationIndex: number) {
+async function setSelectedStation(clickedStationIndex: number, checkFilteredStations: boolean) {
+  let checkStations = stations;
+  if (checkFilteredStations) {
+    checkStations = filterStations;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const clickedStationKey: number = filterStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
+  const clickedStationKey: string = checkStations[clickedStationIndex].key; // Får ut klickade stationens key för identifiera vilken station som är vald
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const clickedStationName: string = filterStations[clickedStationIndex].name; // Får ut den klickade stationens namn
+  const clickedStationName: string = checkStations[clickedStationIndex].name; // Får ut den klickade stationens namn
   const data = await getChosenStationData(clickedStationKey, 'latest-hour', 1); // Skickar in parametrar key och period för temp
   const dataWind = await getChosenStationData(clickedStationKey, 'latest-hour', 4); // Skickar in parametrar key och period för vind
   const dataRain = await getChosenStationData(clickedStationKey, 'latest-hour', 7); // Skickar in key 7 och får ut nederbörd senaste timmen
 
   // Om värderna inte finns skriv ut -
-  temperatureNow.innerHTML = '<span> - </span>'; // Om stationen som är vald inte har tempraur skriv -
+  temperatureNow.innerHTML = '<span> - </span>'; // Om stationen som är vald inte har tempratur skriv -
   windSpeedNow.innerHTML = '<span> - </span>'; // Om stationen inte har vind senaste timmen skriv -
   rainAmount.innerHTML = '<span> - </span>'; // Om stationen inte har nederbörd senaste timmen skriv -
 
@@ -123,13 +128,13 @@ async function setSelectedStation(clickedStationIndex: number) {
 async function chosenStation(e: Event) {
   const clickedStationIndex: number = e?.target?.id as number; // Klickad station får ett index i listan av förslagna stationer
 
-  await setSelectedStation(clickedStationIndex);
+  await setSelectedStation(clickedStationIndex, true);
 }
 
 async function enterOnStation(e: KeyboardEvent) {
   if (e.key === 'Enter') {
     const clickedStationIndex: number = e?.target?.id as number; // Klickad station får ett index i listan av förslagna stationer
-    await setSelectedStation(clickedStationIndex);
+    await setSelectedStation(clickedStationIndex, true);
   }
 }
 
@@ -165,13 +170,12 @@ async function dataAllStationsLastHour(): Promise<void> {
         index = i;
       }
     }
-    await setSelectedStation(index);
+    await setSelectedStation(index, false);
   }
 
   // Begär åtkomst av användarens position
   function getUserLocation() {
     if (navigator.geolocation) {
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       navigator.geolocation.getCurrentPosition(showPosition);
       searchDropdownPosition.classList.add('display-none');
     } else {
@@ -195,7 +199,7 @@ function stationSuggetions(): void {
     ulSuggestedStation.innerHTML = '';
     // Skapar en ny array varje gång jag skriver en bokstav och jämför namnet och de i sökrutan
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    filterStations = stations.filter(station => station.name.toLowerCase().includes(searchField.value.toLowerCase()));
+    filterStations = stations.filter((station) => station.name.toLowerCase().includes(searchField.value.toLowerCase()));
   }
   // Skriver ut 5 eller färre stationsnamn i form av li element som matchar med de som skrivs i sökrutan
   for (let i = 0; i < 5; i++) {
@@ -214,7 +218,7 @@ function stationSuggetions(): void {
     }
   }
 }
-
+console.log(stations);
 searchField?.addEventListener('input', stationSuggetions);
 
 /** ******************************************************************************
