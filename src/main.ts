@@ -113,18 +113,23 @@ async function setSelectedStation(clickedStationIndex: number, checkFilteredStat
 
   // Skriver ut den valda ortens rubrik på webbsidan
   locality.innerHTML = `<span>${clickedStationName}</span>`;
-
+  if (data.value[0].value) {
   // Skriver ut tempratur om det finns för den valda station på webbsidan
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
-  temperatureNow.innerHTML = `<span>${data?.value[0].value}</span>`;
+    temperatureNow.innerHTML = `<span>${data?.value[0].value}</span>`;
+  }
 
-  // Skriver ut vindhastighet om det finns för den valda station på webbsidan
+  if (dataWind.value[0].value) {
+    // Skriver ut vindhastighet om det finns för den valda station på webbsidan
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
-  windSpeedNow.innerHTML = `<span>${dataWind?.value[0].value}</span>`;
+    windSpeedNow.innerHTML = `<span>${dataWind?.value[0].value}</span>`;
+  }
 
-  // Skriver ut nederbörds värde om det finns för den valda station på webbsidan
+  if (dataRain.value[0].value) {
+    // Skriver ut nederbörds värde om det finns för den valda station på webbsidan
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
-  rainAmount.innerHTML = `<span>${dataRain?.value[0].value}</span>`;
+    rainAmount.innerHTML = `<span>${dataRain?.value[0].value}</span>`;
+  }
 }
 
 async function chosenStation(e: Event) {
@@ -179,7 +184,6 @@ async function dataAllStationsLastHour(): Promise<void> {
   // Begär åtkomst av användarens position
   function getUserLocation() {
     if (navigator.geolocation) {
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       navigator.geolocation.getCurrentPosition(showPosition);
       searchDropdownPosition.classList.add('display-none');
     } else {
@@ -222,7 +226,7 @@ function stationSuggetions(): void {
     }
   }
 }
-console.log(stations);
+
 searchField?.addEventListener('input', stationSuggetions);
 
 /** ******************************************************************************

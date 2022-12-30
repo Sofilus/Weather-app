@@ -4,11 +4,9 @@ const urlTempLastHourGbg =
 
 async function getDataLastHour() {
   return fetch(urlTempLastHourGbg)
-    .then(data => {
-      return data.json();
-    })
+    .then((data) => data.json())
     .then((json: object) => json)
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
       return null;
     });
