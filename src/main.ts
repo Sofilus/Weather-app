@@ -114,20 +114,20 @@ async function setSelectedStation(clickedStationIndex: number, checkFilteredStat
   // Skriver ut den valda ortens rubrik på webbsidan
   locality.innerHTML = `<span>${clickedStationName}</span>`;
   if (data.value[0].value) {
-  // Skriver ut tempratur om det finns för den valda station på webbsidan
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
+    // Skriver ut tempratur om det finns för den valda station på webbsidan
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
     temperatureNow.innerHTML = `<span>${data?.value[0].value}</span>`;
   }
 
   if (dataWind.value[0].value) {
     // Skriver ut vindhastighet om det finns för den valda station på webbsidan
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
     windSpeedNow.innerHTML = `<span>${dataWind?.value[0].value}</span>`;
   }
 
   if (dataRain.value[0].value) {
     // Skriver ut nederbörds värde om det finns för den valda station på webbsidan
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/restrict-template-expressions
     rainAmount.innerHTML = `<span>${dataRain?.value[0].value}</span>`;
   }
 }
@@ -207,7 +207,7 @@ function stationSuggetions(): void {
     ulSuggestedStation.innerHTML = '';
     // Skapar en ny array varje gång jag skriver en bokstav och jämför namnen med de i sökrutan
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    filterStations = stations.filter((station) => station.name.toLowerCase().includes(searchField.value.toLowerCase()));
+    filterStations = stations.filter(station => station.name.toLowerCase().includes(searchField.value.toLowerCase()));
   }
   // Skriver ut 5 eller färre stationsnamn i form av li element som matchar med de som skrivs i sökrutan
   for (let i = 0; i < 5; i++) {
